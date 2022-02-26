@@ -1,0 +1,10 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r test_installation_of_rstan}
+example(stan_model, package = "rstan", run.dontrun = TRUE)
+```
+
