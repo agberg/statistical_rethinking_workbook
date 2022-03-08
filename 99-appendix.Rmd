@@ -1,0 +1,36 @@
+# References {-}
+
+---
+nocite: '@*'
+---
+
+<div id="refs"></div>
+
+
+# (APPENDIX) Appendix {.unnumbered}
+
+
+# Tooling for Building in Bookdown
+
+-   @bookdown2016
+
+-   @R-bookdown
+
+-   [@grolemund]
+
+-   [@riederer]
+
+-   [@xie]
+
+# Reference Documents
+
+-   [@thompson]
+
+-   [@mcelreath2022a]
+
+-   [@mcelreath]
+
+-   [@kurz]
+
+
+

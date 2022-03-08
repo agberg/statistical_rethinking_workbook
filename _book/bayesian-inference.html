@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Bayesian Inference | Statistical Rethinking Workbook</title>
+<meta name="author" content="Aaron Berg">
+<meta name="description" content="The first week covers Chapter 1 (The Golem of Prague), Chapter 2 (Small Worlds and Large Worlds), and Chapter 3 (Sampling the Imaginary).  1.1 Lectures Lecture 1:  Lecture 2:   1.2 Exercises ...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Bayesian Inference | Statistical Rethinking Workbook">
+<meta property="og:type" content="book">
+<meta property="og:description" content="The first week covers Chapter 1 (The Golem of Prague), Chapter 2 (Small Worlds and Large Worlds), and Chapter 3 (Sampling the Imaginary).  1.1 Lectures Lecture 1:  Lecture 2:   1.2 Exercises ...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Bayesian Inference | Statistical Rethinking Workbook">
+<meta name="twitter:description" content="The first week covers Chapter 1 (The Golem of Prague), Chapter 2 (Small Worlds and Large Worlds), and Chapter 3 (Sampling the Imaginary).  1.1 Lectures Lecture 1:  Lecture 2:   1.2 Exercises ...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Fira%20Code-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Oxygen-0.4.0/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Statistical Rethinking Workbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="active" href="bayesian-inference.html"><span class="header-section-number">1</span> Bayesian Inference</a></li>
+<li><a class="" href="references.html">References</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="tooling-for-building-in-bookdown.html"><span class="header-section-number">A</span> Tooling for Building in Bookdown</a></li>
+<li><a class="" href="reference-documents.html"><span class="header-section-number">B</span> Reference Documents</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="bayesian-inference" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Bayesian Inference<a class="anchor" aria-label="anchor" href="#bayesian-inference"><i class="fas fa-link"></i></a>
+</h1>
+<p>The first week covers <a href="https://bookdown.org/content/4857/the-golem-of-prague.html">Chapter 1 (The Golem of Prague)</a>, <a href="https://bookdown.org/content/4857/small-worlds-and-large-worlds.html">Chapter 2 (Small Worlds and Large Worlds)</a>, and <a href="https://bookdown.org/content/4857/sampling-the-imaginary.html">Chapter 3 (Sampling the Imaginary)</a>.</p>
+<div id="lectures" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Lectures<a class="anchor" aria-label="anchor" href="#lectures"><i class="fas fa-link"></i></a>
+</h2>
+<p>Lecture 1:</p>
+<iframe src="https://www.youtube.com/embed/cclUd_HoRlo" width="100%" height="400px" data-external="1">
+</iframe>
+<p>Lecture 2:</p>
+<iframe src="https://www.youtube.com/embed/guTdrfycW2Q" width="100%" height="400px" data-external="1">
+</iframe>
+</div>
+<div id="exercises" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises"><i class="fas fa-link"></i></a>
+</h2>
+<div id="chapter-1" class="section level3" number="1.2.1">
+<h3>
+<span class="header-section-number">1.2.1</span> Chapter 1<a class="anchor" aria-label="anchor" href="#chapter-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>There are no exercises for Chapter 1.</p>
+</div>
+<div id="chapter-2" class="section level3" number="1.2.2">
+<h3>
+<span class="header-section-number">1.2.2</span> Chapter 2<a class="anchor" aria-label="anchor" href="#chapter-2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="question">
+<blockquote>
+<p><strong>2E1.</strong> Which of the expressions below correspond to the statement: <em>the probability of rain on Monday</em>?<br>
+(1) Pr(rain)<br>
+(2) Pr(rain|Monday)<br>
+(3) Pr(Monday|rain)<br>
+(4) Pr(rain, Monday) / Pr(Monday)</p>
+</blockquote>
+</div>
+<p>Answers 1 and 4 both describe the probability of rain on Monday.</p>
+<div class="question">
+<blockquote>
+<p><strong>2E2.</strong> Which of the following statements corresponds to the expression: Pr(Monday|rain)?<br>
+(1) The probability of rain on Monday.<br>
+(2) The probability of rain, given that it is Monday.<br>
+(3) The probability that it is Monday, given that it is raining.<br>
+(4) The probability that it is Monday and that it is raining.</p>
+</blockquote>
+</div>
+<p>Answer 3 is the only answer that satisfies this question. Answer 4 would satisfy if it was divided by the probability of rain.</p>
+<div class="question">
+<blockquote>
+<p><strong>2E3.</strong> Which of the following expressions below correspond to the statement: <em>the probability that it is Monday, given that it is raining</em>?<br>
+(1) Pr(Monday|rain)<br>
+(2) Pr(rain|Monday)<br>
+(3) Pr(rain|Monday) Pr(Monday)<br>
+(4) Pr(rain|Monday) Pr(Monday) / Pr(rain)<br>
+(5) Pr(Monday|rain) Pr(rain) / Pr(Monday)</p>
+</blockquote>
+</div>
+<p>Answers 1 and 4 are equivalent and satisfy this question.</p>
+<div class="question">
+<blockquote>
+<p><strong>2E4.</strong> The Bayesian statistician Bruno de Finetti (1906–1985) began his 1973 book on probability theory with the dedication: “PROBABILITY DOES NOT EXIST.” The capitals appeared in the original, so I imagine de Finetti wanted us to shout this statement. What he meant is that probability is a device for describing uncertainty from the perspective of an observer with limited knowledge; it has no objective reality. Discuss the globe tossing example from the chapter, in light of this statement. What does it mean to say “the probability of water is 0.7?”</p>
+</blockquote>
+</div>
+<p>We are describing the probability of a random observation being 0.7. The existence of water is certain and binary for every piece of the globe, as is the proportion of water and land. We are trying to use random observation of a subset of the globe to infer an estimate of the proportion of water and land. The thing we are describing does not exist on the globe - the probability of an observation; it is a proxy for the real thing we are trying to describe (the proportion of water and land.)</p>
+<div class="question">
+<blockquote>
+<p><strong>2M1.</strong> Recall the globe tossing model from the chapter. Compute and plot the grid approximate posterior distribution for each of the following sets of observations. In each case, assume a uniform prior for <em>p</em>.
+(1) W, W, W
+(2) W, W, W, L
+(3) L, W, W, L, W, W, W</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">prior_input</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">probabilities</span><span class="op">)</span><span class="op">{</span>
+  <span class="fl">1</span>
+<span class="op">}</span>
+
+<span class="va">globe_tossing_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">water</span>, <span class="va">total</span>, <span class="va">prior</span> <span class="op">=</span> <span class="va">prior_input</span>, <span class="va">length_output</span> <span class="op">=</span> <span class="fl">101</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">to_return</span> <span class="op">&lt;-</span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="va">length_output</span><span class="op">)</span>,      <span class="co"># define grid</span>
+           prior  <span class="op">=</span> <span class="fu">prior_input</span><span class="op">(</span><span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                       <span class="co"># define prior</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">water</span>, size <span class="op">=</span> <span class="va">total</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># compute likelihood at each value in grid</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>unstd_posterior <span class="op">=</span> <span class="va">likelihood</span> <span class="op">*</span> <span class="va">prior</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>             <span class="co"># compute product of likelihood and prior</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>posterior <span class="op">=</span> <span class="va">unstd_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">unstd_posterior</span><span class="op">)</span><span class="op">)</span>   <span class="co"># standardize the posterior, so it sums to 1</span>
+
+  
+    
+<span class="op">}</span>
+
+<span class="va">one</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+
+<span class="va">two</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">three</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">one</span> <span class="op">+</span> <span class="va">two</span> <span class="op">+</span> <span class="va">three</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/q_2m1-1.png" width="672"></div>
+<div class="question">
+<blockquote>
+<p><strong>2M2.</strong> Now assume a prior for <em>p</em> that is equal to zero when <em>p</em> &lt; 0.5 and is a positive constant when <em>p</em> ≥ 0.5. Again compute and plot the grid approximate posterior distribution for each of the sets of observations in the problem just above.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">prior_input</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">probability</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+    <span class="va">probability</span> <span class="op">&lt;</span> <span class="fl">0.5</span> <span class="op">~</span> <span class="fl">0</span>,
+    <span class="co"># probability &gt; .8 ~ 0.5,</span>
+    <span class="cn">TRUE</span> <span class="op">~</span> <span class="fl">1</span>
+  <span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">globe_tossing_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">water</span>, <span class="va">total</span>, <span class="va">prior</span> <span class="op">=</span> <span class="va">prior_input</span>, <span class="va">length_output</span> <span class="op">=</span> <span class="fl">101</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">to_return</span> <span class="op">&lt;-</span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="va">length_output</span><span class="op">)</span>,      <span class="co"># define grid</span>
+           prior  <span class="op">=</span> <span class="fu">prior_input</span><span class="op">(</span><span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                       <span class="co"># define prior</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">water</span>, size <span class="op">=</span> <span class="va">total</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># compute likelihood at each value in grid</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>unstd_posterior <span class="op">=</span> <span class="va">likelihood</span> <span class="op">*</span> <span class="va">prior</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>             <span class="co"># compute product of likelihood and prior</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>posterior <span class="op">=</span> <span class="va">unstd_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">unstd_posterior</span><span class="op">)</span><span class="op">)</span>   <span class="co"># standardize the posterior, so it sums to 1</span>
+
+  
+    
+<span class="op">}</span>
+
+<span class="va">one</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+
+<span class="va">two</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">three</span> <span class="op">&lt;-</span> <span class="fu">globe_tossing_function</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span>, y <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">one</span> <span class="op">+</span> <span class="va">two</span> <span class="op">+</span> <span class="va">three</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/q_2m2-1.png" width="672"></div>
+<div class="question">
+<blockquote>
+<p><strong>2M3.</strong> Suppose there are two globes, one for Earth and one for Mars. The Earth globe is 70% covered in water. The Mars globe is 100% land. Further suppose that one of these globes—you don’t know which—was tossed in the air and produced a “land” observatiion. Assume that each globe was equally likely to be tossed. Show that the posterior probability that the globe was the Earth, conditional on seeing “land” (Pr(Earth|land)), is 0.23.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+
+<span class="co"># Probability of Land, Given Earth</span>
+<span class="va">ple</span> <span class="op">&lt;-</span> <span class="fl">.3</span>
+
+
+<span class="co"># Probability of Land, Given Mars</span>
+
+<span class="va">plm</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+
+
+<span class="co"># Proability of Earth</span>
+
+<span class="va">pe</span> <span class="op">&lt;-</span> <span class="fl">.5</span>
+
+<span class="co"># Probability of Land</span>
+
+<span class="va">pl</span> <span class="op">&lt;-</span> <span class="va">ple</span><span class="op">*</span><span class="va">pe</span> <span class="op">+</span> <span class="va">plm</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">pe</span><span class="op">)</span>
+
+
+<span class="co"># Probability of Earth, Given Land</span>
+
+<span class="va">pegl</span> <span class="op">&lt;-</span> <span class="va">ple</span> <span class="op">*</span> <span class="va">pe</span> <span class="op">/</span> <span class="va">pl</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>2M4.</strong> Suppose you have a deck with only three cards. Each card has only two sides, and each side is either black or white. One card has two black sides. The second card has one black and one white side. The third card has two white sides. Now suppose all three cards are placed in a bag and shuffled. Someone reaches into the bag and pulls out a card and places it flat on a table. A black side is shown facing up, but you don’t know the color of the side facing down. Show that the probability that the other side is also black is 2/3. Use the counting method (Section 2 of the chapter) to approach this problem. This means counting up the ways that each card could produce the observed data (a black side facing up on the table).</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Probability of black side</span>
+
+<span class="va">two_black</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="va">one_black</span> <span class="op">&lt;-</span> <span class="fl">.5</span>
+<span class="va">zero_black</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+
+<span class="va">probability_two_black_given_first_black</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fl">.5</span><span class="op">)</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>2M5.</strong> Now suppose there are four cards: B/B, B/W, W/W, and another B/B. Again suppose a card is drawn from the bag and a black side appears face up. Again calculate the probability that the other side is black.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Probability of black side</span>
+
+<span class="va">two_black</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">*</span> <span class="fl">2</span>
+<span class="va">one_black</span> <span class="op">&lt;-</span> <span class="fl">.5</span>
+<span class="va">zero_black</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+
+<span class="va">probability_two_black_given_first_black</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">two_black</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">two_black</span> <span class="op">+</span> <span class="va">one_black</span><span class="op">)</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>2M6.</strong> Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it’s less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">two_black</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="va">one_black</span> <span class="op">&lt;-</span> <span class="fl">.5</span> <span class="op">*</span> <span class="fl">2</span>
+<span class="va">zero_black</span> <span class="op">&lt;-</span> <span class="fl">0</span> <span class="op">*</span> <span class="fl">3</span>
+
+<span class="va">probability_two_black_given_first_black</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">two_black</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">two_black</span> <span class="op">+</span> <span class="va">one_black</span><span class="op">)</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>2M7.</strong> Assume again the original card problem, with a single card showing a black side face up. Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, countng all the ways to see each observation, for each possiible first card.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#BB, B: 2</span>
+<span class="co">##BW, W: 1 --&gt; 2</span>
+<span class="co">##WW, W: 2 --&gt; 4</span>
+
+<span class="co">#BW, B: 1</span>
+<span class="co">##WW, W: 2 --&gt; 2</span>
+<span class="co">##BB, W: 0 --&gt; 0</span>
+
+<span class="co">#WW, B: 0</span>
+
+<span class="op">(</span><span class="fl">2</span><span class="op">+</span><span class="fl">4</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">2</span><span class="op">+</span><span class="fl">4</span><span class="op">+</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.75</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>2H1.</strong> Suppose there are two species of panda bear. Both are equally common in the wild and live in the sample places. They look exactly alike and eat the same food, and there is yet no genetic assay capable of telling them apart. They differ however in their family sizes. Species A gives birth to twins 10% of the time, otherwise birthing a single infant. Species births twins 20% of the time, ottherwise birthing singleton infants. Assume these numbers are known with certainty, from many years of field research.<br>
+Now suppose you are managing a captive panda breeding program. You have a newe female panda of unknown species, and she has just given birth to twins. What is the probability that her next birth will also be twins?</p>
+</blockquote>
+</div>
+<p>Copied results from online workbook because presentation was MUCH cleaner than my solution.<span class="citation">(<a href="references.html#ref-thompson" role="doc-biblioref">Thompson, n.d.</a>)</span></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># After first birth, likelihood of species A and B is equal to the rate the</span>
+<span class="co"># species give birth to twins</span>
+<span class="va">a_likelihood</span> <span class="op">&lt;-</span> <span class="fl">0.1</span>
+<span class="va">b_likelihood</span> <span class="op">&lt;-</span> <span class="fl">0.2</span>
+
+<span class="co"># Next calculate the posterior probability that the panda belongs to each</span>
+<span class="co"># species, assume species are equally likely</span>
+<span class="va">likelihood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a_likelihood</span>, <span class="va">b_likelihood</span><span class="op">)</span>
+<span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> 
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">likelihood</span> <span class="op">*</span> <span class="va">prior</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+<span class="va">posterior</span></code></pre></div>
+<pre><code>## [1] 0.3333333 0.6666667</code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#&gt; [1] 0.333 0.667</span>
+
+<span class="co"># The probability the next birth is twins is the probability the panda belongs</span>
+<span class="co"># to each species times the likelihood each species gives birth to twins</span>
+<span class="op">(</span><span class="va">posterior</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">a_likelihood</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">posterior</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">b_likelihood</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.1666667</code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#&gt; [1] 0.167</span>
+
+<span class="co"># AGB: I got the same solution, but this presentation is MUCH cleaner.  Saving it for reference.</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>2H2.</strong> Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, asssuming we have observed only the first birth at that it was twins.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">posterior</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0.3333333</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>2H3.</strong> Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prior</span> <span class="op">&lt;-</span> <span class="va">posterior</span>
+<span class="va">likelihood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.8</span><span class="op">)</span>
+
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">likelihood</span><span class="op">*</span><span class="va">prior</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="va">posterior</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0.36</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>2H4.</strong> A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.<br>
+So suppose now that a veterinarian comes along who has a new genetic test that she claims can identify the species of our mother panda. But the test, like all tests, is imperfect. This is the information you have about the test:</p>
+<ul>
+<li>The probability it correctly identifies a species A panda is 0.8.<br>
+</li>
+<li>The probability it correctly identifies a species B panda is 0.65.</li>
+</ul>
+<p>The vet administers the test to your panda and tells you that the test is positive for species A. First ignore your previous information from the births and compute the posterior probability that your panda is species A. Then redo your calculation, now using the birth data as well.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>
+
+<span class="va">correct_a</span> <span class="op">&lt;-</span> <span class="fl">0.8</span>
+<span class="va">correct_b</span> <span class="op">&lt;-</span> <span class="fl">.65</span>
+<span class="va">incorrect_a</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">correct_a</span>
+<span class="va">incorrect_b</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">correct_b</span>
+
+<span class="va">likelihood_a_a</span> <span class="op">&lt;-</span> <span class="va">correct_a</span>
+<span class="va">likelihood_b_a</span> <span class="op">&lt;-</span> <span class="va">incorrect_b</span>
+
+<span class="va">likelihood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">likelihood_a_a</span>, <span class="va">likelihood_b_a</span><span class="op">)</span>
+
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">likelihood</span><span class="op">*</span><span class="va">prior</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="va">posterior</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0.6956522</code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="va">prior</span> <span class="op">&lt;-</span> <span class="va">posterior</span>
+
+<span class="va">likelihood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fl">.1</span><span class="op">)</span>, <span class="fl">.2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fl">.2</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">likelihood</span><span class="op">*</span><span class="va">prior</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="va">posterior</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0.5625</code></pre>
+</div>
+<div id="chapter-3" class="section level3" number="1.2.3">
+<h3>
+<span class="header-section-number">1.2.3</span> Chapter 3<a class="anchor" aria-label="anchor" href="#chapter-3"><i class="fas fa-link"></i></a>
+</h3>
+<div class="question">
+<blockquote>
+<p><strong>Easy.</strong> The Easy problems use the sample from the posterior distribution for the globe tossing example. The code will give you a specific set of samples, so that you can check your answers exactly.</p>
+</blockquote>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
+<span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span>
+<span class="va">likelihood</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">6</span>, size <span class="op">=</span> <span class="fl">9</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">likelihood</span> <span class="op">*</span> <span class="va">prior</span>
+<span class="va">posterior</span> <span class="op">&lt;-</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">p_grid</span>, prob <span class="op">=</span> <span class="va">posterior</span>, size <span class="op">=</span> <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<blockquote>
+<p>Use the values in <code>samples</code> to answer the questions that follow.</p>
+</blockquote>
+</div>
+<div class="question">
+<blockquote>
+<p><strong>3E1.</strong> How much posterior probability lies below <em>p</em> = 0.2?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 4e-04</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E2.</strong> How much posterior probability lies above <em>p</em> = 0.8?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&gt;</span> <span class="fl">.8</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.1116</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E3.</strong> How much posterior probability lies between <em>p</em> = 0.2 and <em>p</em> = 0.8?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">.8</span> <span class="op">&amp;</span> <span class="va">samples</span> <span class="op">&gt;</span><span class="fl">.2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.888</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E4.</strong> 20% of the posterior probability lies below which value of <em>p</em>?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">.2</span><span class="op">)</span></code></pre></div>
+<pre><code>##       20% 
+## 0.5185185</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E5.</strong> 20% of the posterior probability lies above which value of <em>p</em>?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">.8</span><span class="op">)</span></code></pre></div>
+<pre><code>##       80% 
+## 0.7557558</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E6.</strong> Which values of <em>p</em> contain the narrowest interval equal to 66% of the posterior probability?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">samples</span>, prob <span class="op">=</span> <span class="fl">.66</span><span class="op">)</span></code></pre></div>
+<pre><code>##     |0.66     0.66| 
+## 0.5085085 0.7737738</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3E7.</strong> Which values of <em>p</em> contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">PI</a></span><span class="op">(</span><span class="va">samples</span>, prob <span class="op">=</span> <span class="fl">.66</span><span class="op">)</span></code></pre></div>
+<pre><code>##       17%       83% 
+## 0.5025025 0.7697698</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3M1.</strong> Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Constructe the posterior distribution, using grid approximation. Use the same flat prior as before.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">globe_tossing</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fl">1</span>,
+    likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">8</span>, size <span class="op">=</span> <span class="fl">15</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">likelihood</span>,
+    posterior <span class="op">=</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="va">posterior_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">globe_tossing</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">posterior</span>, x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+
+<span class="co"># samples_new &lt;- tibble::tibble(</span>
+<span class="co">#   sampled_values = sample(globe_tossing$p_grid, prob = globe_tossing$posterior, size = 1e4, replace = TRUE)</span>
+<span class="co"># )</span>
+<span class="co"># </span>
+<span class="co"># sampled_posterior_plot &lt;- ggplot(data = samples_new, aes(x = sampled_values)) +</span>
+<span class="co">#   geom_histogram()</span>
+<span class="co"># </span>
+<span class="co"># posterior_plot + sampled_posterior_plot</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>3M2.</strong> Draw 10,000 samples from the grid approximation from above. Then use the sample to calculate the 90% HPDI for <em>p</em>.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">101</span><span class="op">)</span>
+<span class="va">samples_for_hpdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">globe_tossing</span><span class="op">$</span><span class="va">p_grid</span>, <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">globe_tossing</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">samples_for_hpdi</span>, <span class="fl">.9</span><span class="op">)</span></code></pre></div>
+<pre><code>##      |0.9      0.9| 
+## 0.3343343 0.7217217</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3M3.</strong> Construct a posterior predictive check for this model and data. The means simulate the distribution of samples, averaging over the posterior uncertainty in <em>p</em>. What is the probability of observing 8 water in 15 tosses?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">water</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">15</span>, <span class="va">samples_for_hpdi</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">water</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.1499</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3M4.</strong> Using the posterior distribution constructed from the new (8/15) data, now calculate the probability of observing 6 water in 9 tosses.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">six_in_nine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">9</span>, <span class="va">samples_for_hpdi</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">six_in_nine</span> <span class="op">==</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.1714</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3M5.</strong> Start over at <strong>3M1</strong>, but now use a prior that is zero below <em>p</em> = 0.5 and a constant above <em>p</em> = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water. Repeat each problem above and compare the inferences (using both priors) to the true value <em>p</em> = 0.7.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">globe_tossing</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+      <span class="va">p_grid</span> <span class="op">&lt;</span> <span class="fl">0.5</span> <span class="op">~</span> <span class="fl">0</span>,
+      <span class="cn">TRUE</span> <span class="op">~</span> <span class="fl">1</span>
+    <span class="op">)</span>,
+    likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">8</span>, size <span class="op">=</span> <span class="fl">15</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">likelihood</span>,
+    posterior <span class="op">=</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="co"># --</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">101</span><span class="op">)</span>
+<span class="va">samples_for_hpdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">globe_tossing</span><span class="op">$</span><span class="va">p_grid</span>, <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">globe_tossing</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">samples_for_hpdi</span>, <span class="fl">.9</span><span class="op">)</span></code></pre></div>
+<pre><code>##      |0.9      0.9| 
+## 0.5005005 0.7107107</code></pre>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="va">water</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">15</span>, <span class="va">samples_for_hpdi</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">water</span> <span class="op">==</span> <span class="fl">8</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.1614</code></pre>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="va">six_in_nine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">9</span>, <span class="va">samples_for_hpdi</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">six_in_nine</span> <span class="op">==</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.2362</code></pre>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>3M6.</strong> Suppose you want to estimate the Earth’s proportion of water very precisely. Specifically, you want the 99% percentile interval of the posterior distribution of <em>p</em> to be only 0.05 wide. This means the distance between the upper and lower bound of the interval should be 0.05. How many times will you have to toss the globe to do this?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># library(future.callr)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="co"># plan(callr)</span>
+
+<span class="va">single_interval</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">prior_tibble_input</span>, <span class="va">samples_input</span>, <span class="va">real_prob_input</span> <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">globe_tossing</span> <span class="op">&lt;-</span> <span class="va">prior_tibble_input</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+      likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span>
+        <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">samples_input</span>, <span class="va">real_prob_input</span><span class="op">)</span>,
+        size <span class="op">=</span> <span class="va">samples_input</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+      posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">likelihood</span>,
+      posterior <span class="op">=</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+    <span class="op">)</span>
+  
+  <span class="va">samples_for_hpdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">globe_tossing</span><span class="op">$</span><span class="va">p_grid</span>, <span class="va">samples_input</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">globe_tossing</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+
+  <span class="va">hpdi</span> <span class="op">&lt;-</span> <span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">samples_for_hpdi</span>, <span class="fl">.99</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">hpdi</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">hpdi</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>
+  
+<span class="op">}</span>
+
+<span class="va">repeated_single_interval</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">prior_tibble_input</span>, <span class="va">samples_input</span>, 
+                                     <span class="va">number_repetitions_input</span>, <span class="va">real_prob_input</span> <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="va">number_repetitions_input</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span>
+      <span class="op">~</span> <span class="fu">single_interval</span><span class="op">(</span>prior_tibble_input <span class="op">=</span> <span class="va">prior_tibble</span>, 
+                        samples_input <span class="op">=</span> <span class="va">samples_input</span>, 
+                        real_prob_input <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
+    <span class="op">)</span>
+  
+<span class="op">}</span>
+
+
+<span class="va">prior_tibble</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span>,
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+      <span class="co"># p_grid &lt; 0.5 ~ 0,</span>
+      <span class="cn">TRUE</span> <span class="op">~</span> <span class="fl">1</span>
+    <span class="op">)</span>
+    <span class="op">)</span>
+
+<span class="va">different_sample_sized</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from<span class="op">=</span><span class="fl">1e1</span>, to<span class="op">=</span><span class="fl">1e5</span>, by <span class="op">=</span> <span class="fl">1e3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    ranges <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.x <span class="op">=</span> <span class="va">samples</span>, .f <span class="op">=</span> <span class="op">~</span><span class="fu">repeated_single_interval</span><span class="op">(</span>
+      prior_tibble_input <span class="op">=</span> <span class="va">prior_tibble_input</span>,
+      samples_input <span class="op">=</span> <span class="va">.x</span>,
+      number_repetitions_input <span class="op">=</span> <span class="fl">10</span>,
+      real_prob_input <span class="op">=</span> <span class="fl">0.7</span>
+    <span class="op">)</span>, 
+    <span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    average <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">ranges</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
+<div class="question">
+<blockquote>
+<p><strong>Hard.</strong> The Hard problems here all use the data below. These data indicate the gender (male = 1, female = 0) of officially reported first and second born children in 100 two-child families. So for example, the first family in the data reported a boy (1) and then a girl (0). The second family reported a girl (0) and then a boy (1). The third family reported two girls. You can load these tow vectors into R’s memory by typing:</p>
+</blockquote>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rethinking</span><span class="op">)</span></code></pre></div>
+<pre><code>## Loading required package: rstan</code></pre>
+<pre><code>## Loading required package: StanHeaders</code></pre>
+<pre><code>## rstan (Version 2.21.3, GitRev: 2e1f913d3ca3)</code></pre>
+<pre><code>## For execution on a local, multicore CPU with excess RAM we recommend calling
+## options(mc.cores = parallel::detectCores()).
+## To avoid recompilation of unchanged Stan programs, we recommend calling
+## rstan_options(auto_write = TRUE)</code></pre>
+<pre><code>## 
+## Attaching package: 'rstan'</code></pre>
+<pre><code>## The following object is masked from 'package:magrittr':
+## 
+##     extract</code></pre>
+<pre><code>## Loading required package: cmdstanr</code></pre>
+<pre><code>## This is cmdstanr version 0.4.0.9001</code></pre>
+<pre><code>## - CmdStanR documentation and vignettes: mc-stan.org/cmdstanr</code></pre>
+<pre><code>## - Use set_cmdstan_path() to set the path to CmdStan</code></pre>
+<pre><code>## - Use install_cmdstan() to install CmdStan</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## rethinking (Version 2.21)</code></pre>
+<pre><code>## 
+## Attaching package: 'rethinking'</code></pre>
+<pre><code>## The following object is masked from 'package:rstan':
+## 
+##     stan</code></pre>
+<pre><code>## The following object is masked from 'package:stats':
+## 
+##     rstudent</code></pre>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">homeworkch3</span><span class="op">)</span>
+
+<span class="va">birth_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">birth1</span>, <span class="va">birth2</span><span class="op">)</span></code></pre></div>
+<blockquote>
+<p>Use these vectors as data. So for example to compute the total number of boys born across all of these births, you could use:</p>
+</blockquote>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth2</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 111</code></pre>
+</div>
+<div class="question">
+<blockquote>
+<p><strong>3H1.</strong> Using grid approximation, compute the posterior distribution for the probability of a birth being a boy. Assume a uniform prior probability. Which parameter value maximizes the posterior probability?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+
+<span class="va">count_boy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth2</span><span class="op">)</span>
+<span class="va">total_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">birth1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">birth2</span><span class="op">)</span>
+
+<span class="va">prob_of_born_boy</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+  p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fl">1</span>,
+    likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">count_boy</span>, <span class="va">total_count</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    posterior <span class="op">=</span> <span class="va">likelihood</span> <span class="op">*</span> <span class="va">prior</span>,
+    posterior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">prob_of_born_boy</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">posterior</span>, x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672"></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prob_of_born_boy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 4
+##   p_grid prior likelihood posterior
+##    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1  0.552     1     0.0565    0.0114</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3H2.</strong> Using the <code>sample</code> function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these sample to estimate the 50%, 89%, and 97% highest posterior density intervals.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>
+<span class="va">sampled_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">p_grid</span>, size <span class="op">=</span> <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>to_sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.89</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+   intervals <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">to_sample</span>, <span class="op">~</span><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">sampled_draws</span>, prob <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> 
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">intervals</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##   to_sample intervals
+##       &lt;dbl&gt;     &lt;dbl&gt;
+## 1      0.5      0.529
+## 2      0.5      0.577
+## 3      0.89     0.499
+## 4      0.89     0.61 
+## 5      0.9      0.494
+## 6      0.9      0.609</code></pre>
+<div class="question">
+<blockquote>
+<p><strong>3H3.</strong> Use <code>rbinom</code> to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the <code>dens</code> command (part of the <code>rethinking</code> package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">break_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">p_sampled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">p_grid</span>, size <span class="op">=</span> <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+<span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">200</span>, prob <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+<span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="va">sim_data</span>, p_sampled <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simulated_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>
+    .width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.66</span>, <span class="fl">0.89</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">break_func</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">count_boy</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of Boys"</span>, y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
+<div class="question">
+<blockquote>
+<p><strong>3H4.</strong> Now compare 10,000 counts of boys from 100 simulated first borns only the number of boys in the first births, <code>birth1</code>. How does the model look in this light?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="va">break_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">p_sampled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">p_grid</span>, size <span class="op">=</span> <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+<span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">100</span>, prob <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+<span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="va">sim_data</span>, p_sampled <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simulated_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>
+    .width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.66</span>, <span class="fl">0.89</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">break_func</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth1</span><span class="op">)</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth2</span><span class="op">)</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of Boys"</span>, y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure">
+<img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672">
+The model overestimates the number of first born boys, but underestimates the number of second born boys.</div>
+<div class="question">
+<blockquote>
+<p><strong>3H5.</strong> The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated conts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">female_male_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth2</span><span class="op">[</span><span class="va">birth1</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span>
+<span class="va">female_first</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">birth1</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
+
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">p_sampled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">p_grid</span>, size <span class="op">=</span> <span class="fl">1e4</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">prob_of_born_boy</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+<span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="va">female_first</span>, prob <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+<span class="va">simulated_data_female_first</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="va">sim_data</span>, p_sampled <span class="op">=</span> <span class="va">p_sampled</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simulated_data_female_first</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>
+    .width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.66</span>, <span class="fl">0.89</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">break_func</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">female_male_count</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of Boys After Girl"</span>, y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure">
+<img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672">
+The model underestimates the number of boys that are born after a girl. Thus, it does not appear that the first and second birth sex are independent of each other.</div>
+</div>
+</div>
+<div id="homework" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Homework<a class="anchor" aria-label="anchor" href="#homework"><i class="fas fa-link"></i></a>
+</h2>
+<div class="question">
+<blockquote>
+<p><strong>1.</strong> Suppose the globe tossing data (Chapter 2) had turned out to be 4 water and 11 land. Construct the posterior distribution, using grid approximation. Use the same flat prior as in the book.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">water</span> <span class="op">&lt;-</span> <span class="fl">4</span>
+<span class="va">total</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="op">+</span> <span class="fl">11</span>
+
+<span class="va">break_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+<span class="op">}</span>
+
+
+<span class="va">globe_tossing</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fl">1</span>,
+    likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">water</span>, <span class="va">total</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">likelihood</span>,
+    posterior <span class="op">=</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">globe_tossing</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">posterior</span>, x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">water</span><span class="op">/</span><span class="va">total</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672"></div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+
+<span class="va">sampled_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">globe_tossing</span><span class="op">$</span><span class="va">p_grid</span>, <span class="fl">1e4</span>, prob <span class="op">=</span> <span class="va">globe_tossing</span><span class="op">$</span><span class="va">posterior</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>intervals_of_interest <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.89</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+   intervals <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">intervals_of_interest</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">sampled_draws</span>, prob <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> 
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">intervals</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+##   intervals_of_interest lower upper
+##                   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1                  0.5  0.209 0.352
+## 2                  0.89 0.112 0.447
+## 3                  0.9  0.114 0.458</code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="va">total</span>, prob <span class="op">=</span> <span class="va">sampled_draws</span><span class="op">)</span>
+<span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="va">sim_data</span>, p_sampled <span class="op">=</span> <span class="va">sampled_draws</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simulated_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>
+    .width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.66</span>, <span class="fl">0.89</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">break_func</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">water</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-25-2.png" width="672"></div>
+<div class="question">
+<blockquote>
+<p><strong>2.</strong> Now suppose the data are 4 water and 2 land. Compute the posterior again, but this time use a prior that is zero below <em>p</em> = 0.5 and a constant above <em>p</em> = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+
+<span class="va">water</span> <span class="op">&lt;-</span> <span class="fl">4</span>
+<span class="va">total</span> <span class="op">&lt;-</span> <span class="fl">4</span> <span class="op">+</span> <span class="fl">2</span>
+
+<span class="va">break_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+<span class="op">}</span>
+
+
+<span class="va">globe_tossing</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">p_grid</span> <span class="op">&lt;</span> <span class="fl">.5</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,
+    likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">water</span>, <span class="va">total</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">likelihood</span>,
+    posterior <span class="op">=</span> <span class="va">posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">globe_tossing</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">posterior</span>, x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">water</span><span class="op">/</span><span class="va">total</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672"></div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+
+<span class="va">sampled_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html">sample</a></span><span class="op">(</span><span class="va">globe_tossing</span><span class="op">$</span><span class="va">p_grid</span>, <span class="fl">1e4</span>, prob <span class="op">=</span> <span class="va">globe_tossing</span><span class="op">$</span><span class="va">posterior</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>intervals_of_interest <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.89</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+   intervals <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">intervals_of_interest</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">HPDI</a></span><span class="op">(</span><span class="va">sampled_draws</span>, prob <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+   percentile <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">intervals_of_interest</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/HPDI.html">PI</a></span><span class="op">(</span><span class="va">sampled_draws</span>, prob <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">intervals</span>, <span class="va">percentile</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">name</span>, values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lower</span>, <span class="va">upper</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">hpdi_intervals</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 5
+##   intervals_of_interest lower_intervals lower_percentile upper_intervals upper_percentile
+##                   &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+## 1                  0.5            0.574            0.599           0.745            0.773
+## 2                  0.89           0.5              0.524           0.84             0.88 
+## 3                  0.9            0.5              0.522           0.846            0.885</code></pre>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+<span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="va">total</span>, prob <span class="op">=</span> <span class="va">sampled_draws</span><span class="op">)</span>
+<span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="va">sim_data</span>, p_sampled <span class="op">=</span> <span class="va">sampled_draws</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simulated_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>
+    .width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.66</span>, <span class="fl">0.89</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="va">break_func</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">water</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-26-2.png" width="672"></div>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+
+<span class="va">globe_tossing</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10000</span>, weight_by <span class="op">=</span> <span class="va">posterior</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    sim_water <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">total</span>, prob <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sim_water</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.67</span>, <span class="fl">0.89</span>, <span class="fl">0.97</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">total</span>, <span class="fl">1</span><span class="op">)</span>,
+                    point_interval <span class="op">=</span> <span class="fu">ggdist</span><span class="fu">::</span><span class="va"><a href="http://mjskay.github.io/ggdist/reference/point_interval.html">mean_hdci</a></span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Proportion Water (p)"</span>, y <span class="op">=</span> <span class="st">"Posterior Density"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">water</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_economist.html">theme_economist</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672"></div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">globe_tossing</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10000</span>, weight_by <span class="op">=</span> <span class="va">posterior</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_histinterval.html">stat_histinterval</a></span><span class="op">(</span>.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.67</span>, <span class="fl">0.89</span>, <span class="fl">0.97</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.02</span><span class="op">)</span>,
+                    point_interval <span class="op">=</span> <span class="fu">ggdist</span><span class="fu">::</span><span class="va"><a href="http://mjskay.github.io/ggdist/reference/point_interval.html">mean_hdci</a></span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Proportion Water (p)"</span>, y <span class="op">=</span> <span class="st">"Posterior Density"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_economist.html">theme_economist</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-2.png" width="672"></div>
+<div class="question">
+<blockquote>
+<p><strong>3.</strong> For the posterior distribution from <strong>2</strong>, compute 89% percentile and HPDI intervals. Compare the widths of these intervals. Which is wider? Why? If you had only the information in the interval, what might you misunderstand about the shape of the posterior distribution?</p>
+</blockquote>
+</div>
+<p>The percentile is wider because it has to enforce symmetry in the lower and upper tails. This is not a useful constraint, given that our prior says the upper tail is likely to be longer than the lower tail given the constraint from our prior.</p>
+<div class="question">
+<blockquote>
+<p><strong>4.</strong> OPTIONAL CHALLENGE. Suppose there is bias in sampling so that Land is more likely than Water to be recorded. Specifically, assume that 1-in-5 (20%) of Water samples are accidentally recorded instead as “Land.” First, write a generative simulation of this sampling process. Assuming the true proportion of Water is 0.70, what proportion does your simulation tend to produce instead? Second, using a simulated sample of 20 tosses, compute the unbiased posterior distribution of the true proportion of water.</p>
+</blockquote>
+</div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Generative simulation</span>
+
+<span class="va">biased_globe_toss</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">samples_input</span>, <span class="va">true_p_input</span>, <span class="va">error_given_true_input</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">is_land</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">samples_input</span>, <span class="fl">1</span>, <span class="va">true_p_input</span><span class="op">)</span>
+  <span class="va">is_not_error</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">is_land</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">-</span><span class="va">error_given_true_input</span><span class="op">)</span>
+  
+  <span class="va">is_land</span><span class="op">*</span><span class="va">is_not_error</span>
+  
+  <span class="co"># is_not_error &lt;- runif(samples_input) &gt; error_given_true_input</span>
+  <span class="co"># to_return &lt;- is_land * is_not_error</span>
+  
+<span class="op">}</span>
+
+<span class="co"># Assuming correct proportion is .7, what will a simulation observe</span>
+
+<span class="va">true_amount</span> <span class="op">&lt;-</span> <span class="fl">.7</span>
+<span class="va">error_given_true</span> <span class="op">&lt;-</span> <span class="fl">.2</span>
+<span class="va">samples</span> <span class="op">&lt;-</span> <span class="fl">1e5</span>
+
+<span class="va">catch</span> <span class="op">&lt;-</span> <span class="fu">biased_globe_toss</span><span class="op">(</span><span class="va">samples</span>, <span class="va">true_amount</span>, <span class="va">error_given_true</span><span class="op">)</span>
+
+<span class="va">catch_true</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">1</span>, <span class="va">true_amount</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">catch</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.55656</code></pre>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">catch_true</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.69947</code></pre>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="co"># Simulated tosses</span>
+
+<span class="co"># set.seed(100)</span>
+<span class="va">biased_observations</span> <span class="op">&lt;-</span> <span class="fu">biased_globe_toss</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">.7</span>, <span class="fl">.2</span><span class="op">)</span>
+
+<span class="co"># --</span>
+
+<span class="va">globe_tossing_biased_and_unbiased</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fl">1</span>,
+    biased_likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    biased_posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">biased_likelihood</span>,
+    biased_posterior <span class="op">=</span> <span class="va">biased_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_posterior</span><span class="op">)</span>,
+    
+    unbiased_likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">*</span><span class="fl">.8</span><span class="op">)</span>,
+    unbiased_posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">unbiased_likelihood</span>,
+    unbiased_posterior <span class="op">=</span> <span class="va">unbiased_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">unbiased_posterior</span><span class="op">)</span>,
+  <span class="op">)</span>
+
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">globe_tossing_biased_and_unbiased</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geomtextpath</span><span class="fu">::</span><span class="fu"><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html">geom_textline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">biased_posterior</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"grey70"</span>,
+                size <span class="op">=</span> <span class="fl">6</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, label <span class="op">=</span> <span class="st">"Biased"</span>, hjust <span class="op">=</span> <span class="fl">0.45</span>,
+                family <span class="op">=</span> <span class="st">"Source Sans Pro"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geomtextpath</span><span class="fu">::</span><span class="fu"><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html">geom_textline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">unbiased_posterior</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"solid"</span>, color <span class="op">=</span> <span class="st">"#009FB7"</span>,
+                size <span class="op">=</span> <span class="fl">6</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, label <span class="op">=</span> <span class="st">"Corrected"</span>, hjust <span class="op">=</span> <span class="fl">0.4</span>,
+                family <span class="op">=</span> <span class="st">"Source Sans Pro"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Proportion Water (p)"</span>, y <span class="op">=</span> <span class="st">"Posterior Density"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672"></div>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>
+
+<span class="co"># Generative simulation</span>
+
+<span class="va">biased_globe_toss</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">samples_input</span>, <span class="va">true_p_input</span>, <span class="va">error_given_true_input</span>, <span class="va">error_given_false_input</span><span class="op">)</span><span class="op">{</span>
+  
+  <span class="va">is_water</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">samples_input</span>, <span class="fl">1</span>, <span class="va">true_p_input</span><span class="op">)</span>
+  <span class="va">is_not_water_error</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">is_water</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">-</span><span class="va">error_given_true_input</span><span class="op">)</span>
+  
+  <span class="va">observed_water</span> <span class="op">&lt;-</span> <span class="va">is_water</span><span class="op">*</span><span class="va">is_not_water_error</span>
+  
+  <span class="co"># is_not_error &lt;- runif(samples_input) &gt; error_given_true_input</span>
+  <span class="co"># to_return &lt;- is_land * is_not_error</span>
+  
+  <span class="va">is_land</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="op">(</span><span class="va">is_water</span><span class="op">)</span>
+  <span class="va">is_land_error</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">is_land</span>, <span class="fl">1</span>, <span class="va">error_given_false_input</span><span class="op">)</span>
+  
+  <span class="va">observed_water_two</span> <span class="op">&lt;-</span> <span class="va">is_land</span> <span class="op">*</span> <span class="va">is_land_error</span>
+  
+  <span class="va">observed_water</span> <span class="op">+</span> <span class="va">observed_water_two</span>
+  
+  
+<span class="op">}</span>
+
+<span class="co"># Assuming correct proportion is .7, what will a simulation observe</span>
+
+<span class="va">true_amount</span> <span class="op">&lt;-</span> <span class="fl">.7</span>
+<span class="va">error_given_true</span> <span class="op">&lt;-</span> <span class="fl">0.25</span>
+<span class="va">error_given_false</span> <span class="op">&lt;-</span> <span class="fl">0.25</span>
+<span class="va">samples</span> <span class="op">&lt;-</span> <span class="fl">1e5</span>
+
+<span class="va">catch</span> <span class="op">&lt;-</span> <span class="fu">biased_globe_toss</span><span class="op">(</span><span class="va">samples</span>, <span class="va">true_amount</span>, <span class="va">error_given_true</span>, <span class="va">error_given_false</span><span class="op">)</span>
+
+<span class="va">catch_true</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">1</span>, <span class="va">true_amount</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">catch</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.60137</code></pre>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">catch_true</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.69852</code></pre>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">catch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">1</span>, <span class="va">true_amount</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">error_given_true</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">true_amount</span><span class="op">)</span><span class="op">*</span><span class="va">error_given_false</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">catch2</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0.60255</code></pre>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --</span>
+
+
+<span class="co"># Simulated tosses</span>
+
+<span class="co"># set.seed(100)</span>
+<span class="va">biased_observations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1e3</span>, <span class="fl">1</span>, 
+                              prob <span class="op">=</span> <span class="va">true_amount</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">error_given_true</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">true_amount</span><span class="op">)</span><span class="op">*</span><span class="va">error_given_false</span><span class="op">)</span>
+
+
+
+<span class="co"># --</span>
+
+<span class="va">globe_tossing_biased_and_unbiased</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>p_grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">p_grid</span> <span class="op">&lt;</span><span class="fl">.5</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,
+    prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">p_grid</span> <span class="op">&gt;</span> <span class="fl">.9</span>, <span class="fl">0</span>, <span class="va">prior</span><span class="op">)</span>,
+    biased_likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span>,
+    biased_posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">biased_likelihood</span>,
+    biased_posterior <span class="op">=</span> <span class="va">biased_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_posterior</span><span class="op">)</span>,
+    
+    unbiased_likelihood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">biased_observations</span><span class="op">)</span>, p <span class="op">=</span> <span class="va">p_grid</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">error_given_true</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">p_grid</span><span class="op">)</span><span class="op">*</span><span class="va">error_given_false</span><span class="op">)</span>,
+    unbiased_posterior <span class="op">=</span> <span class="va">prior</span> <span class="op">*</span> <span class="va">unbiased_likelihood</span>,
+    unbiased_posterior <span class="op">=</span> <span class="va">unbiased_posterior</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">unbiased_posterior</span><span class="op">)</span>,
+  <span class="op">)</span>
+
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">globe_tossing_biased_and_unbiased</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">p_grid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geomtextpath</span><span class="fu">::</span><span class="fu"><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html">geom_textline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">biased_posterior</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, color <span class="op">=</span> <span class="st">"grey70"</span>,
+                size <span class="op">=</span> <span class="fl">6</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, label <span class="op">=</span> <span class="st">"Biased"</span>, hjust <span class="op">=</span> <span class="fl">0.45</span>,
+                family <span class="op">=</span> <span class="st">"Source Sans Pro"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geomtextpath</span><span class="fu">::</span><span class="fu"><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html">geom_textline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">unbiased_posterior</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"solid"</span>, color <span class="op">=</span> <span class="st">"#009FB7"</span>,
+                size <span class="op">=</span> <span class="fl">6</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, label <span class="op">=</span> <span class="st">"Corrected"</span>, hjust <span class="op">=</span> <span class="fl">0.4</span>,
+                family <span class="op">=</span> <span class="st">"Source Sans Pro"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Proportion Water (p)"</span>, y <span class="op">=</span> <span class="st">"Posterior Density"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672"></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html">About</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#bayesian-inference"><span class="header-section-number">1</span> Bayesian Inference</a></li>
+<li><a class="nav-link" href="#lectures"><span class="header-section-number">1.1</span> Lectures</a></li>
+<li>
+<a class="nav-link" href="#exercises"><span class="header-section-number">1.2</span> Exercises</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#chapter-1"><span class="header-section-number">1.2.1</span> Chapter 1</a></li>
+<li><a class="nav-link" href="#chapter-2"><span class="header-section-number">1.2.2</span> Chapter 2</a></li>
+<li><a class="nav-link" href="#chapter-3"><span class="header-section-number">1.2.3</span> Chapter 3</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#homework"><span class="header-section-number">1.3</span> Homework</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s/blob/main/01-bayesian-inference.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s/edit/main/01-bayesian-inference.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Statistical Rethinking Workbook</strong>" was written by Aaron Berg. It was last built on 2022-03-08.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1170 @@
+# Bayesian Inference
+
+The first week covers [Chapter 1 (The Golem of Prague)](https://bookdown.org/content/4857/the-golem-of-prague.html), [Chapter 2 (Small Worlds and Large Worlds)](https://bookdown.org/content/4857/small-worlds-and-large-worlds.html), and [Chapter 3 (Sampling the Imaginary)](https://bookdown.org/content/4857/sampling-the-imaginary.html).
+
+## Lectures
+
+Lecture 1:
+
+```{r lecture-1, echo = FALSE, out.width = "100%"}
+knitr::include_url("https://www.youtube.com/embed/cclUd_HoRlo")
+```
+
+Lecture 2:
+
+```{r lecture-2, echo = FALSE, out.width = "100%"}
+knitr::include_url("https://www.youtube.com/embed/guTdrfycW2Q")
+```
+
+
+## Exercises
+
+### Chapter 1
+
+There are no exercises for Chapter 1.
+
+### Chapter 2
+
+:::question
+> **2E1.** Which of the expressions below correspond to the statement: *the probability of rain on Monday*?  
+>   (1) Pr(rain)  
+>   (2) Pr(rain|Monday)  
+>   (3) Pr(Monday|rain)  
+>   (4) Pr(rain, Monday) / Pr(Monday)  
+:::
+
+Answers 1 and 4 both describe the probability of rain on Monday.
+
+
+:::question
+> **2E2.** Which of the following statements corresponds to the expression: Pr(Monday|rain)?  
+>   (1) The probability of rain on Monday.  
+>   (2) The probability of rain, given that it is Monday.  
+>   (3) The probability that it is Monday, given that it is raining.  
+>   (4) The probability that it is Monday and that it is raining.
+:::
+
+Answer 3 is the only answer that satisfies this question.  Answer 4 would satisfy if it was divided by the probability of rain.  
+
+
+:::question
+> **2E3.** Which of the following expressions below correspond to the statement: *the probability that it is Monday, given that it is raining*?  
+>   (1) Pr(Monday|rain)  
+>   (2) Pr(rain|Monday)  
+>   (3) Pr(rain|Monday) Pr(Monday)  
+>   (4) Pr(rain|Monday) Pr(Monday) / Pr(rain)  
+>   (5) Pr(Monday|rain) Pr(rain) / Pr(Monday)
+:::
+
+Answers 1 and 4 are equivalent and satisfy this question.
+
+
+:::question
+> **2E4.** The Bayesian statistician Bruno de Finetti (1906--1985) began his 1973 book on probability theory with the dedication: "PROBABILITY DOES NOT EXIST." The capitals appeared in the original, so I imagine de Finetti wanted us to shout this statement. What he meant is that probability is a device for describing uncertainty from the perspective of an observer with limited knowledge; it has no objective reality. Discuss the globe tossing example from the chapter, in light of this statement. What does it mean to say "the probability of water is 0.7"?
+:::
+
+We are describing the probability of a random observation being 0.7.  The existence of water is certain and binary for every piece of the globe, as is the proportion of water and land.  We are trying to use random observation of a subset of the globe to infer an estimate of the proportion of water and land.  The thing we are describing does not exist on the globe - the probability of an observation;  it is a proxy for the real thing we are trying to describe (the proportion of water and land.)
+
+:::question
+> **2M1.** Recall the globe tossing model from the chapter. Compute and plot the grid approximate posterior distribution for each of the following sets of observations. In each case, assume a uniform prior for *p*.
+>   (1) W, W, W
+>   (2) W, W, W, L
+>   (3) L, W, W, L, W, W, W
+:::
+
+```{r q_2m1}
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+prior_input <- function(probabilities){
+  1
+}
+
+globe_tossing_function <- function(water, total, prior = prior_input, length_output = 101) {
+
+  to_return <-
+    tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = length_output),      # define grid
+           prior  = prior_input(p_grid)) %>%                                       # define prior
+    dplyr::mutate(likelihood = dbinom(water, size = total, prob = p_grid)) %>%  # compute likelihood at each value in grid
+    dplyr::mutate(unstd_posterior = likelihood * prior) %>%             # compute product of likelihood and prior
+    dplyr::mutate(posterior = unstd_posterior / sum(unstd_posterior))   # standardize the posterior, so it sums to 1
+
+  
+    
+}
+
+one <- globe_tossing_function(3, 3) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+
+two <- globe_tossing_function(3, 4) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+three <- globe_tossing_function(5, 7) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+one + two + three
+
+
+
+```
+
+
+
+
+:::question
+> **2M2.** Now assume a prior for *p* that is equal to zero when *p* < 0.5 and is a positive constant when *p* &ge; 0.5. Again compute and plot the grid approximate posterior distribution for each of the sets of observations in the problem just above.
+:::
+
+```{r q_2m2}
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+prior_input <- function(probability){
+  dplyr::case_when(
+    probability < 0.5 ~ 0,
+    # probability > .8 ~ 0.5,
+    TRUE ~ 1
+  )
+}
+
+globe_tossing_function <- function(water, total, prior = prior_input, length_output = 101) {
+
+  to_return <-
+    tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = length_output),      # define grid
+           prior  = prior_input(p_grid)) %>%                                       # define prior
+    dplyr::mutate(likelihood = dbinom(water, size = total, prob = p_grid)) %>%  # compute likelihood at each value in grid
+    dplyr::mutate(unstd_posterior = likelihood * prior) %>%             # compute product of likelihood and prior
+    dplyr::mutate(posterior = unstd_posterior / sum(unstd_posterior))   # standardize the posterior, so it sums to 1
+
+  
+    
+}
+
+one <- globe_tossing_function(3, 3) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+
+two <- globe_tossing_function(3, 4) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+three <- globe_tossing_function(5, 7) %>%
+  ggplot(data = ., mapping = aes(x = p_grid, y = posterior)) +
+  geom_line()
+
+one + two + three
+
+
+
+```
+
+
+
+:::question
+> **2M3.** Suppose there are two globes, one for Earth and one for Mars. The Earth globe is 70% covered in water. The Mars globe is 100% land. Further suppose that one of these globes---you don't know which---was tossed in the air and produced a "land" observatiion. Assume that each globe was equally likely to be tossed. Show that the posterior probability that the globe was the Earth, conditional on seeing "land" (Pr(Earth|land)), is 0.23.
+:::
+
+```{r q_2m3}
+library(magrittr)
+
+# Probability of Land, Given Earth
+ple <- .3
+
+
+# Probability of Land, Given Mars
+
+plm <- 1
+
+
+# Proability of Earth
+
+pe <- .5
+
+# Probability of Land
+
+pl <- ple*pe + plm*(1-pe)
+
+
+# Probability of Earth, Given Land
+
+pegl <- ple * pe / pl
+
+
+```
+
+
+
+:::question
+> **2M4.** Suppose you have a deck with only three cards. Each card has only two sides, and each side is either black or white. One card has two black sides. The second card has one black and one white side. The third card has two white sides. Now suppose all three cards are placed in a bag and shuffled. Someone reaches into the bag and pulls out a card and places it flat on a table. A black side is shown facing up, but you don't know the color of the side facing down. Show that the probability that the other side is also black is 2/3. Use the counting method (Section 2 of the chapter) to approach this problem. This means counting up the ways that each card could produce the observed data (a black side facing up on the table).
+:::
+
+```{r q2m4}
+
+# Probability of black side
+
+two_black <- 1
+one_black <- .5
+zero_black <- 0
+
+probability_two_black_given_first_black <- (1)/(1+.5)
+
+
+```
+
+
+:::question
+> **2M5.** Now suppose there are four cards: B/B, B/W, W/W, and another B/B. Again suppose a card is drawn from the bag and a black side appears face up. Again calculate the probability that the other side is black.
+:::
+
+```{r q2m5}
+
+# Probability of black side
+
+two_black <- 1 * 2
+one_black <- .5
+zero_black <- 0
+
+probability_two_black_given_first_black <- (two_black)/(two_black + one_black)
+
+
+```
+
+
+:::question
+> **2M6.** Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it's less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.
+:::
+
+```{r q2m6}
+
+two_black <- 1
+one_black <- .5 * 2
+zero_black <- 0 * 3
+
+probability_two_black_given_first_black <- (two_black)/(two_black + one_black)
+
+
+```
+
+
+:::question
+> **2M7.** Assume again the original card problem, with a single card showing a black side face up. Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, countng all the ways to see each observation, for each possiible first card.
+:::
+
+```{r q2m7}
+
+#BB, B: 2
+##BW, W: 1 --> 2
+##WW, W: 2 --> 4
+
+#BW, B: 1
+##WW, W: 2 --> 2
+##BB, W: 0 --> 0
+
+#WW, B: 0
+
+(2+4)/(2+4+2)
+
+
+```
+
+
+:::question
+> **2H1.** Suppose there are two species of panda bear. Both are equally common in the wild and live in the sample places. They look exactly alike and eat the same food, and there is  yet no genetic assay capable of telling them apart. They differ however in their family sizes. Species A gives birth to twins 10% of the time, otherwise birthing a single infant. Species births twins 20% of the time, ottherwise birthing singleton infants. Assume these numbers are known with certainty, from many years of field research.  
+> Now suppose you are managing a captive panda breeding program. You have a newe female panda of unknown species, and she has just given birth to twins. What is the probability that her next birth will also be twins?
+:::
+
+Copied results from online workbook because presentation was MUCH cleaner than my solution.[@thompson]
+
+```{r}
+
+# After first birth, likelihood of species A and B is equal to the rate the
+# species give birth to twins
+a_likelihood <- 0.1
+b_likelihood <- 0.2
+
+# Next calculate the posterior probability that the panda belongs to each
+# species, assume species are equally likely
+likelihood <- c(a_likelihood, b_likelihood)
+prior <- c(1, 1) 
+posterior <- likelihood * prior
+posterior <- posterior / sum(posterior)
+posterior
+#> [1] 0.333 0.667
+
+# The probability the next birth is twins is the probability the panda belongs
+# to each species times the likelihood each species gives birth to twins
+(posterior[1] * a_likelihood) + (posterior[2] * b_likelihood)
+#> [1] 0.167
+
+# AGB: I got the same solution, but this presentation is MUCH cleaner.  Saving it for reference.
+
+
+
+
+```
+
+
+
+:::question
+> **2H2.** Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, asssuming we have observed only the first birth at that it was twins.
+:::
+
+```{r}
+
+posterior[1]
+
+
+
+```
+
+
+
+
+:::question
+> **2H3.** Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.
+:::
+
+```{r}
+
+
+prior <- posterior
+likelihood <- c(0.9, 0.8)
+
+posterior <- likelihood*prior
+posterior <- posterior / sum(posterior)
+
+posterior[1]
+
+
+```
+
+:::question
+> **2H4.** A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.  
+> So suppose now that a veterinarian comes along who has a new genetic test that she claims can identify the species of our mother panda. But the test, like all tests, is imperfect. This is the information you have about the test:  
+>
+>  - The probability it correctly identifies a species A panda is 0.8.  
+>  - The probability it correctly identifies a species B panda is 0.65.  
+>
+> The vet administers the test to your panda and tells you that the test is positive for species A. First ignore your previous information from the births and compute the posterior probability that your panda is species A. Then redo your calculation, now using the birth data as well.
+:::
+
+```{r}
+
+prior <- c(1,1)
+
+correct_a <- 0.8
+correct_b <- .65
+incorrect_a <- 1-correct_a
+incorrect_b <- 1-correct_b
+
+likelihood_a_a <- correct_a
+likelihood_b_a <- incorrect_b
+
+likelihood <- c(likelihood_a_a, likelihood_b_a)
+
+posterior <- likelihood*prior
+posterior <- posterior / sum(posterior)
+
+posterior[1]
+
+
+# --
+
+prior <- posterior
+
+likelihood <- c(.1*(1-.1), .2*(1-.2))
+
+posterior <- likelihood*prior
+posterior <- posterior / sum(posterior)
+
+posterior[1]
+
+
+```
+
+### Chapter 3
+
+:::question
+> **Easy.** The Easy problems use the sample from the posterior distribution for the globe tossing example. The code will give you a specific set of samples, so that you can check your answers exactly.
+
+```{r}
+
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+prior <- rep(1, 1000)
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+posterior <- likelihood * prior
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples <- sample(p_grid, prob = posterior, size = 1e4, replace = TRUE)
+
+```
+
+> Use the values in `samples` to answer the questions that follow.
+:::
+:::question
+> **3E1.** How much posterior probability lies below *p* = 0.2?
+:::
+
+```{r}
+
+round(sum(samples < .2) / length(samples), 6)
+
+
+```
+
+
+:::question
+> **3E2.** How much posterior probability lies above *p* = 0.8?
+:::
+
+```{r}
+
+round(sum(samples > .8) / length(samples), 6)
+
+
+```
+
+
+
+:::question
+> **3E3.** How much posterior probability lies between *p* = 0.2 and *p* = 0.8?
+:::
+
+```{r}
+
+round(sum(samples < .8 & samples >.2) / length(samples), 6)
+
+
+```
+
+
+:::question
+> **3E4.** 20% of the posterior probability lies below which value of *p*?
+:::
+
+```{r}
+
+quantile(samples, .2)
+
+```
+
+
+
+:::question
+> **3E5.** 20% of the posterior probability lies above which value of *p*?
+:::
+
+```{r}
+
+quantile(samples, .8)
+
+```
+
+:::question
+> **3E6.** Which values of *p* contain the narrowest interval equal to 66% of the posterior probability?
+:::
+
+```{r}
+
+rethinking::HPDI(samples, prob = .66)
+
+
+```
+
+
+:::question
+> **3E7.** Which values of *p* contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?
+:::
+
+```{r}
+
+rethinking::PI(samples, prob = .66)
+
+
+```
+
+
+:::question
+> **3M1.** Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Constructe the posterior distribution, using grid approximation. Use the same flat prior as before.
+:::
+
+```{r}
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+globe_tossing <- tibble::tibble(
+  p_grid = seq(from = 0, to = 1, length.out = 1000)
+) %>%
+  dplyr::mutate(
+    prior = 1,
+    likelihood = dbinom(8, size = 15, prob = p_grid),
+    posterior = prior * likelihood,
+    posterior = posterior / sum(posterior)
+  )
+
+posterior_plot <- ggplot(data = globe_tossing, aes(y = posterior, x = p_grid)) +
+  geom_line()
+
+set.seed(100)
+
+# samples_new <- tibble::tibble(
+#   sampled_values = sample(globe_tossing$p_grid, prob = globe_tossing$posterior, size = 1e4, replace = TRUE)
+# )
+# 
+# sampled_posterior_plot <- ggplot(data = samples_new, aes(x = sampled_values)) +
+#   geom_histogram()
+# 
+# posterior_plot + sampled_posterior_plot
+
+```
+
+
+:::question
+> **3M2.** Draw 10,000 samples from the grid approximation from above. Then use the sample to calculate the 90% HPDI for *p*.
+:::
+
+```{r}
+
+set.seed(101)
+samples_for_hpdi <- sample(globe_tossing$p_grid, 1e4, replace = TRUE, prob = globe_tossing$posterior)
+
+rethinking::HPDI(samples_for_hpdi, .9)
+
+```
+
+:::question
+> **3M3.** Construct a posterior predictive check for this model and data. The means simulate the distribution of samples, averaging over the posterior uncertainty in *p*. What is the probability of observing 8 water in 15 tosses?
+:::
+
+```{r}
+
+water <- rbinom(1e4, 15, samples_for_hpdi)
+
+mean(water == 8)
+
+
+```
+
+
+:::question
+> **3M4.** Using the posterior distribution constructed from the new (8/15) data, now calculate the probability of observing 6 water in 9 tosses.
+:::
+
+
+```{r}
+
+six_in_nine <- rbinom(1e4, 9, samples_for_hpdi)
+
+mean(six_in_nine == 6)
+
+
+```
+
+
+
+:::question
+> **3M5.** Start over at **3M1**, but now use a prior that is zero below *p* = 0.5 and a constant above *p* = 0.5. This corresponds to prior information that a majority of the Earth's surface is water. Repeat each problem above and compare the inferences (using both priors) to the true value *p* = 0.7.
+:::
+
+```{r}
+
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+globe_tossing <- tibble::tibble(
+  p_grid = seq(from = 0, to = 1, length.out = 1000)
+) %>%
+  dplyr::mutate(
+    prior = dplyr::case_when(
+      p_grid < 0.5 ~ 0,
+      TRUE ~ 1
+    ),
+    likelihood = dbinom(8, size = 15, prob = p_grid),
+    posterior = prior * likelihood,
+    posterior = posterior / sum(posterior)
+  )
+
+# --
+
+set.seed(101)
+samples_for_hpdi <- sample(globe_tossing$p_grid, 1e4, replace = TRUE, prob = globe_tossing$posterior)
+
+rethinking::HPDI(samples_for_hpdi, .9)
+
+# --
+
+water <- rbinom(1e4, 15, samples_for_hpdi)
+
+mean(water == 8)
+
+
+# --
+
+six_in_nine <- rbinom(1e4, 9, samples_for_hpdi)
+
+mean(six_in_nine == 6)
+
+
+# --
+
+
+
+```
+
+
+:::question
+> **3M6.** Suppose you want to estimate the Earth's proportion of water very precisely. Specifically, you want the 99% percentile interval of the posterior distribution of *p* to be only 0.05 wide. This means the distance between the upper and lower bound of the interval should be 0.05. How many times will you have to toss the globe to do this?
+:::
+
+```{r}
+
+# library(future.callr)
+library(magrittr)
+# plan(callr)
+
+single_interval <- function(prior_tibble_input, samples_input, real_prob_input = .7){
+  
+  globe_tossing <- prior_tibble_input %>%
+    dplyr::mutate(
+      likelihood = dbinom(
+        rbinom(1, samples_input, real_prob_input),
+        size = samples_input, prob = p_grid),
+      posterior = prior * likelihood,
+      posterior = posterior / sum(posterior)
+    )
+  
+  samples_for_hpdi <- sample(globe_tossing$p_grid, samples_input, replace = TRUE, prob = globe_tossing$posterior)
+
+  hpdi <- rethinking::HPDI(samples_for_hpdi, .99)
+  round(as.numeric(hpdi[2] - hpdi[1]), 3)
+  
+}
+
+repeated_single_interval <- function(prior_tibble_input, samples_input, 
+                                     number_repetitions_input, real_prob_input = .7){
+  
+  output <- rep(NA_real_, number_repetitions_input) %>%
+    purrr::map_dbl(
+      ~ single_interval(prior_tibble_input = prior_tibble, 
+                        samples_input = samples_input, 
+                        real_prob_input = 0.7)
+    )
+  
+}
+
+
+prior_tibble <- tibble::tibble(
+  p_grid = seq(from = 0, to = 1, length.out = 1001),
+) %>%
+  dplyr::mutate(
+    prior = dplyr::case_when(
+      # p_grid < 0.5 ~ 0,
+      TRUE ~ 1
+    )
+    )
+
+different_sample_sized <- tibble::tibble(samples = seq(from=1e1, to=1e5, by = 1e3)) %>%
+    dplyr::mutate(
+    ranges = purrr::map(.x = samples, .f = ~repeated_single_interval(
+      prior_tibble_input = prior_tibble_input,
+      samples_input = .x,
+      number_repetitions_input = 10,
+      real_prob_input = 0.7
+    ), 
+    )
+  ) %>%
+  dplyr::mutate(
+    average = purrr::map(ranges, ~mean(.x))
+  )
+
+```
+
+
+
+:::question
+> **Hard.** The Hard problems here all use the data below. These data indicate the gender (male = 1, female = 0) of officially reported first and second born children in 100 two-child families. So for example, the first family in the data reported a boy (1) and then a girl (0). The second family reported a girl (0) and then a boy (1). The third family reported two girls. You can load these tow vectors into R's memory by typing:
+
+
+```{r e3h}
+
+library(rethinking)
+data(homeworkch3)
+
+birth_data <- tibble::tibble(birth1, birth2)
+
+
+```
+
+> Use these vectors as data. So for example to compute the total number of boys born across all of these births, you could use:
+```{r e3h-boys}
+sum(birth1) + sum(birth2)
+```
+:::
+
+:::question
+> **3H1.** Using grid approximation, compute the posterior distribution for the probability of a birth being a boy. Assume a uniform prior probability. Which parameter value maximizes the posterior probability?
+:::
+
+```{r}
+
+library(ggplot2)
+
+count_boy <- sum(birth1) + sum(birth2)
+total_count <- length(birth1) + length(birth2)
+
+prob_of_born_boy <- tibble::tibble(
+  p_grid = seq(from = 0, to = 1, length.out = 1001)
+) %>%
+  dplyr::mutate(
+    prior = 1,
+    likelihood = dbinom(count_boy, total_count, prob = p_grid),
+    posterior = likelihood * prior,
+    posterior = round(posterior / sum(posterior), 4)
+  )
+
+ggplot(data = prob_of_born_boy, aes(y = posterior, x = p_grid)) +
+  geom_line()
+
+prob_of_born_boy %>%
+  dplyr::arrange(desc(posterior)) %>%
+  dplyr::slice(1)
+
+```
+
+
+
+:::question
+> **3H2.** Using the `sample` function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these sample to estimate the 50%, 89%, and 97% highest posterior density intervals.
+:::
+
+```{r}
+
+set.seed(300)
+sampled_draws <- sample(prob_of_born_boy$p_grid, size = 1e4, replace = TRUE, prob = prob_of_born_boy$posterior)
+
+hpdi_intervals <- tibble::tibble(to_sample = c(.5, .89, .9)) %>%
+  dplyr::mutate(
+   intervals = purrr::map(to_sample, ~rethinking::HPDI(sampled_draws, prob = .x)) 
+  ) %>%
+  tidyr::unnest(intervals)
+
+hpdi_intervals
+
+```
+
+
+
+:::question
+> **3H3.** Use `rbinom` to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the `dens` command (part of the `rethinking` package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?
+:::
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+break_func <- function(x) {
+  length(seq(min(x), max(x), by = 1)) + 1
+}
+
+set.seed(100)
+p_sampled <- sample(prob_of_born_boy$p_grid, size = 1e4, replace = TRUE, prob = prob_of_born_boy$posterior)
+sim_data <- rbinom(1e4, 200, prob = p_sampled)
+simulated_data <- dplyr::bind_cols(outcome = sim_data, p_sampled = p_sampled)
+
+ggplot(data = simulated_data, aes(x = outcome)) +
+  ggdist::stat_histinterval(
+    .width = c(0.66, 0.89), breaks = break_func
+  ) +
+  geom_vline(aes(xintercept = count_boy), linetype = "dashed", color = "red") +
+  labs(x = "Number of Boys", y = "Density")
+  
+
+```
+
+
+
+:::question
+> **3H4.** Now compare 10,000 counts of boys from 100 simulated first borns only the number of boys in the first births, `birth1`. How does the model look in this light?
+:::
+
+```{r}
+library(ggplot2)
+library(patchwork)
+
+break_func <- function(x) {
+  length(seq(min(x), max(x), by = 1)) + 1
+}
+
+set.seed(100)
+p_sampled <- sample(prob_of_born_boy$p_grid, size = 1e4, replace = TRUE, prob = prob_of_born_boy$posterior)
+sim_data <- rbinom(1e4, 100, prob = p_sampled)
+simulated_data <- dplyr::bind_cols(outcome = sim_data, p_sampled = p_sampled)
+
+ggplot(data = simulated_data, aes(x = outcome)) +
+  ggdist::stat_histinterval(
+    .width = c(0.66, 0.89), breaks = break_func
+  ) +
+  geom_vline(aes(xintercept = sum(birth1)), linetype = "dashed", color = "red") +
+  geom_vline(aes(xintercept = sum(birth2)), linetype = "dashed", color = "blue") +
+  labs(x = "Number of Boys", y = "Density")
+  
+
+```
+The model overestimates the number of first born boys, but underestimates the number of second born boys.
+
+
+:::question
+> **3H5.** The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated conts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?
+:::
+
+```{r}
+
+female_male_count <- sum(birth2[birth1 == 0])
+female_first <- sum(birth1 == 1)
+
+
+set.seed(100)
+p_sampled <- sample(prob_of_born_boy$p_grid, size = 1e4, replace = TRUE, prob = prob_of_born_boy$posterior)
+sim_data <- rbinom(1e4, female_first, prob = p_sampled)
+simulated_data_female_first <- dplyr::bind_cols(outcome = sim_data, p_sampled = p_sampled)
+
+ggplot(data = simulated_data_female_first, aes(x = outcome)) +
+  ggdist::stat_histinterval(
+    .width = c(0.66, 0.89), breaks = break_func
+  ) +
+  geom_vline(aes(xintercept = female_male_count), linetype = "dashed", color = "red") +
+  labs(x = "Number of Boys After Girl", y = "Density")
+
+
+```
+The model underestimates the number of boys that are born after a girl. Thus, it does not appear that the first and second birth sex are independent of each other. 
+
+
+## Homework
+
+:::question
+> **1.** Suppose the globe tossing data (Chapter 2) had turned out to be 4 water and 11 land. Construct the posterior distribution, using grid approximation. Use the same flat prior as in the book.
+:::
+
+```{r}
+
+water <- 4
+total <- 4 + 11
+
+break_func <- function(x) {
+  length(seq(min(x), max(x), by = 1)) + 1
+}
+
+
+globe_tossing <- tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = 1001)) %>%
+  dplyr::mutate(
+    prior = 1,
+    likelihood = dbinom(water, total, p = p_grid),
+    posterior = prior * likelihood,
+    posterior = posterior / sum(posterior)
+  )
+
+ggplot(globe_tossing, aes(y = posterior, x = p_grid)) +
+  geom_line() +
+  geom_vline(aes(xintercept = water/total), linetype = "dashed", color = "red")
+
+# --
+
+set.seed(100)
+
+sampled_draws <- sample(globe_tossing$p_grid, 1e4, prob = globe_tossing$posterior, replace = TRUE)
+
+hpdi_intervals <- tibble::tibble(intervals_of_interest = c(.5, .89, .9)) %>%
+  dplyr::mutate(
+   intervals = purrr::map(intervals_of_interest, ~setNames(rethinking::HPDI(sampled_draws, prob = .x), c("lower", "upper"))) 
+  ) %>%
+  tidyr::unnest_wider(intervals)
+
+hpdi_intervals
+
+# --
+
+sim_data <- rbinom(1e4, total, prob = sampled_draws)
+simulated_data <- dplyr::bind_cols(outcome = sim_data, p_sampled = sampled_draws)
+
+ggplot(data = simulated_data, aes(x = outcome)) +
+  ggdist::stat_histinterval(
+    .width = c(0.66, 0.89), breaks = break_func
+  ) +
+  geom_vline(aes(xintercept = water), linetype = "dashed", color = "red")
+
+```
+
+
+
+
+
+
+
+:::question
+> **2.** Now suppose the data are 4 water and 2 land. Compute the posterior again, but this time use a prior that is zero below *p* = 0.5 and a constant above *p* = 0.5. This corresponds to prior information that a majority of the Earth's surface is water.
+:::
+
+```{r}
+library(magrittr)
+library(ggplot2)
+
+water <- 4
+total <- 4 + 2
+
+break_func <- function(x) {
+  length(seq(min(x), max(x), by = 1)) + 1
+}
+
+
+globe_tossing <- tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = 1001)) %>%
+  dplyr::mutate(
+    prior = ifelse(p_grid < .5, 0, 1),
+    likelihood = dbinom(water, total, p = p_grid),
+    posterior = prior * likelihood,
+    posterior = posterior / sum(posterior)
+  )
+
+ggplot(globe_tossing, aes(y = posterior, x = p_grid)) +
+    geom_line() +
+    geom_vline(aes(xintercept = water/total), linetype = "dashed", color = "red")
+
+# --
+
+set.seed(100)
+
+sampled_draws <- sample(globe_tossing$p_grid, 1e4, prob = globe_tossing$posterior, replace = TRUE)
+
+hpdi_intervals <- tibble::tibble(intervals_of_interest = c(.5, .89, .9)) %>%
+  dplyr::mutate(
+   intervals = purrr::map(intervals_of_interest, ~setNames(rethinking::HPDI(sampled_draws, prob = .x), c("lower", "upper"))),
+   percentile = purrr::map(intervals_of_interest, ~setNames(rethinking::PI(sampled_draws, prob = .x), c("lower", "upper")))
+  ) %>%
+  tidyr::pivot_longer(cols = c(intervals, percentile)) %>%
+  tidyr::unnest_wider(value) %>%
+  tidyr::pivot_wider(names_from = name, values_from = c(lower, upper))
+
+hpdi_intervals
+
+# --
+
+sim_data <- rbinom(1e4, total, prob = sampled_draws)
+simulated_data <- dplyr::bind_cols(outcome = sim_data, p_sampled = sampled_draws)
+
+ggplot(data = simulated_data, aes(x = outcome)) +
+  ggdist::stat_histinterval(
+    .width = c(0.66, 0.89), breaks = break_func
+  ) +
+  geom_vline(aes(xintercept = water), linetype = "dashed", color = "red")
+
+```
+
+```{r}
+
+set.seed(123)
+
+globe_tossing %>% 
+  dplyr::slice_sample(n = 10000, weight_by = posterior, replace = TRUE) %>% 
+  dplyr::mutate(
+    sim_water = rbinom(dplyr::n(), total, prob = p_grid)
+    ) %>%
+  ggplot(aes(x = sim_water)) +
+  ggdist::stat_histinterval(.width = c(0.67, 0.89, 0.97), breaks = seq(0, total, 1),
+                    point_interval = ggdist::mean_hdci) +
+  labs(x = "Proportion Water (p)", y = "Posterior Density") +
+  geom_vline(aes(xintercept = water), linetype = "dashed", color = "red") +
+  ggthemes::theme_economist()
+
+
+globe_tossing %>% 
+  dplyr::slice_sample(n = 10000, weight_by = posterior, replace = TRUE) %>% 
+  ggplot(aes(x = p_grid)) +
+  ggdist::stat_histinterval(.width = c(0.67, 0.89, 0.97), breaks = seq(0, 1, .02),
+                    point_interval = ggdist::mean_hdci) +
+  labs(x = "Proportion Water (p)", y = "Posterior Density") +
+  ggthemes::theme_economist()
+
+
+```
+
+
+
+:::question
+> **3.** For the posterior distribution from **2**, compute 89% percentile and HPDI intervals. Compare the widths of these intervals. Which is wider? Why? If you had only the information in the interval, what might you misunderstand about the shape of the posterior distribution?
+:::
+
+The percentile is wider because it has to enforce symmetry in the lower and upper tails.  This is not a useful constraint, given that our prior says the upper tail is likely to be longer than the lower tail given the constraint from our prior.
+
+:::question
+> **4.** OPTIONAL CHALLENGE. Suppose there is bias in sampling so that Land is more likely than Water to be recorded. Specifically, assume that 1-in-5 (20%) of Water samples are accidentally recorded instead as "Land." First, write a generative simulation of this sampling process. Assuming the true proportion of Water is 0.70, what proportion does your simulation tend to produce instead? Second, using a simulated sample of 20 tosses, compute the unbiased posterior distribution of the true proportion of water.
+:::
+
+```{r}
+
+
+# Generative simulation
+
+biased_globe_toss <- function(samples_input, true_p_input, error_given_true_input){
+  
+  is_land <- rbinom(samples_input, 1, true_p_input)
+  is_not_error <- rbinom(is_land, 1, 1-error_given_true_input)
+  
+  is_land*is_not_error
+  
+  # is_not_error <- runif(samples_input) > error_given_true_input
+  # to_return <- is_land * is_not_error
+  
+}
+
+# Assuming correct proportion is .7, what will a simulation observe
+
+true_amount <- .7
+error_given_true <- .2
+samples <- 1e5
+
+catch <- biased_globe_toss(samples, true_amount, error_given_true)
+
+catch_true <- rbinom(samples, 1, true_amount)
+
+mean(catch)
+mean(catch_true)
+
+# --
+
+```
+
+
+```{r}
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+# Simulated tosses
+
+# set.seed(100)
+biased_observations <- biased_globe_toss(20, .7, .2)
+
+# --
+
+globe_tossing_biased_and_unbiased <- tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = 1001)) %>%
+  dplyr::mutate(
+    prior = 1,
+    biased_likelihood = dbinom(sum(biased_observations), length(biased_observations), p = p_grid),
+    biased_posterior = prior * biased_likelihood,
+    biased_posterior = biased_posterior / sum(biased_posterior),
+    
+    unbiased_likelihood = dbinom(sum(biased_observations), length(biased_observations), p = p_grid*.8),
+    unbiased_posterior = prior * unbiased_likelihood,
+    unbiased_posterior = unbiased_posterior / sum(unbiased_posterior),
+  )
+
+
+ggplot(globe_tossing_biased_and_unbiased, aes(x = p_grid)) +
+  geomtextpath::geom_textline(aes(y = biased_posterior), linetype = "dashed", color = "grey70",
+                size = 6, linewidth = 1, label = "Biased", hjust = 0.45,
+                family = "Source Sans Pro") +
+  geomtextpath::geom_textline(aes(y = unbiased_posterior), linetype = "solid", color = "#009FB7",
+                size = 6, linewidth = 1, label = "Corrected", hjust = 0.4,
+                family = "Source Sans Pro") +
+  scale_x_continuous(breaks = seq(0, 1, 0.1)) +
+  labs(x = "Proportion Water (p)", y = "Posterior Density")
+
+
+```
+
+
+```{r}
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+# Generative simulation
+
+biased_globe_toss <- function(samples_input, true_p_input, error_given_true_input, error_given_false_input){
+  
+  is_water <- rbinom(samples_input, 1, true_p_input)
+  is_not_water_error <- rbinom(is_water, 1, 1-error_given_true_input)
+  
+  observed_water <- is_water*is_not_water_error
+  
+  # is_not_error <- runif(samples_input) > error_given_true_input
+  # to_return <- is_land * is_not_error
+  
+  is_land <- 1-(is_water)
+  is_land_error <- rbinom(is_land, 1, error_given_false_input)
+  
+  observed_water_two <- is_land * is_land_error
+  
+  observed_water + observed_water_two
+  
+  
+}
+
+# Assuming correct proportion is .7, what will a simulation observe
+
+true_amount <- .7
+error_given_true <- 0.25
+error_given_false <- 0.25
+samples <- 1e5
+
+catch <- biased_globe_toss(samples, true_amount, error_given_true, error_given_false)
+
+catch_true <- rbinom(samples, 1, true_amount)
+
+mean(catch)
+mean(catch_true)
+
+
+catch2 <- rbinom(samples, 1, true_amount*(1-error_given_true) + (1-true_amount)*error_given_false)
+
+mean(catch2)
+
+# --
+
+
+# Simulated tosses
+
+# set.seed(100)
+biased_observations <- rbinom(1e3, 1, 
+                              prob = true_amount*(1-error_given_true) + (1-true_amount)*error_given_false)
+
+
+
+# --
+
+globe_tossing_biased_and_unbiased <- tibble::tibble(p_grid = seq(from = 0, to = 1, length.out = 1001)) %>%
+  dplyr::mutate(
+    prior = ifelse(p_grid <.5, 0, 1),
+    prior = ifelse(p_grid > .9, 0, prior),
+    biased_likelihood = dbinom(sum(biased_observations), length(biased_observations), p = p_grid),
+    biased_posterior = prior * biased_likelihood,
+    biased_posterior = biased_posterior / sum(biased_posterior),
+    
+    unbiased_likelihood = dbinom(sum(biased_observations), length(biased_observations), p = p_grid*(1-error_given_true) + (1-p_grid)*error_given_false),
+    unbiased_posterior = prior * unbiased_likelihood,
+    unbiased_posterior = unbiased_posterior / sum(unbiased_posterior),
+  )
+
+
+ggplot(globe_tossing_biased_and_unbiased, aes(x = p_grid)) +
+  geomtextpath::geom_textline(aes(y = biased_posterior), linetype = "dashed", color = "grey70",
+                size = 6, linewidth = 1, label = "Biased", hjust = 0.45,
+                family = "Source Sans Pro") +
+  geomtextpath::geom_textline(aes(y = unbiased_posterior), linetype = "solid", color = "#009FB7",
+                size = 6, linewidth = 1, label = "Corrected", hjust = 0.4,
+                family = "Source Sans Pro") +
+  scale_x_continuous(breaks = seq(0, 1, 0.1)) +
+  labs(x = "Proportion Water (p)", y = "Posterior Density")
+
+
+```
+

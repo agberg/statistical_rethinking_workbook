@@ -1,774 +1,425 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Statistical Rethinking Workbook</title>
-  <meta name="description" content="This is a workbook for notes and problems as I work through Statistical Rethinking by Richard McElreath" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="References | Statistical Rethinking Workbook" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="This is a workbook for notes and problems as I work through Statistical Rethinking by Richard McElreath" />
-  <meta name="github-repo" content="agberg/statistical_rethinking_workbook" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Statistical Rethinking Workbook" />
-  
-  <meta name="twitter:description" content="This is a workbook for notes and problems as I work through Statistical Rethinking by Richard McElreath" />
-  
-
-<meta name="author" content="Aaron Berg" />
-
-
-<meta name="date" content="2022-02-27" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="sharing-your-book.html"/>
-
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>References | Statistical Rethinking Workbook</title>
+<meta name="author" content="Aaron Berg">
+<meta name="description" content="Allaire, JJ, Romain Francois, Kevin Ushey, Gregory Vandenbrouck, Marcus Geelnard, and Intel. 2022. RcppParallel: Parallel Programming Tools for Rcpp....">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="References | Statistical Rethinking Workbook">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Allaire, JJ, Romain Francois, Kevin Ushey, Gregory Vandenbrouck, Marcus Geelnard, and Intel. 2022. RcppParallel: Parallel Programming Tools for Rcpp....">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="References | Statistical Rethinking Workbook">
+<meta name="twitter:description" content="Allaire, JJ, Romain Francois, Kevin Ushey, Gregory Vandenbrouck, Marcus Geelnard, and Intel. 2022. RcppParallel: Parallel Programming Tools for Rcpp....">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Fira%20Code-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Oxygen-0.4.0/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Statistical Rethinking Workbook</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="hello-bookdown.html"><a href="hello-bookdown.html"><i class="fa fa-check"></i><b>2</b> Hello bookdown</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="hello-bookdown.html"><a href="hello-bookdown.html#a-section"><i class="fa fa-check"></i><b>2.1</b> A section</a>
-<ul>
-<li class="chapter" data-level="" data-path="hello-bookdown.html"><a href="hello-bookdown.html#an-unnumbered-section"><i class="fa fa-check"></i>An unnumbered section</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="hello-bookdown.html"><a href="hello-bookdown.html#lectures"><i class="fa fa-check"></i><b>2.2</b> Lectures</a></li>
-<li class="chapter" data-level="2.3" data-path="hello-bookdown.html"><a href="hello-bookdown.html#exercises"><i class="fa fa-check"></i><b>2.3</b> Exercises</a>
-<ul>
-<li class="chapter" data-level="2.3.1" data-path="hello-bookdown.html"><a href="hello-bookdown.html#chapter-1"><i class="fa fa-check"></i><b>2.3.1</b> Chapter 1</a></li>
-<li class="chapter" data-level="2.3.2" data-path="hello-bookdown.html"><a href="hello-bookdown.html#chapter-2"><i class="fa fa-check"></i><b>2.3.2</b> Chapter 2</a></li>
-<li class="chapter" data-level="2.3.3" data-path="hello-bookdown.html"><a href="hello-bookdown.html#chapter-3"><i class="fa fa-check"></i><b>2.3.3</b> Chapter 3</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="hello-bookdown.html"><a href="hello-bookdown.html#homework"><i class="fa fa-check"></i><b>2.4</b> Homework</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>3</b> Cross-references</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="cross.html"><a href="cross.html#chapters-and-sub-chapters"><i class="fa fa-check"></i><b>3.1</b> Chapters and sub-chapters</a></li>
-<li class="chapter" data-level="3.2" data-path="cross.html"><a href="cross.html#captioned-figures-and-tables"><i class="fa fa-check"></i><b>3.2</b> Captioned figures and tables</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>4</b> Parts</a></li>
-<li class="chapter" data-level="5" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>5</b> Footnotes and citations</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>5.1</b> Footnotes</a></li>
-<li class="chapter" data-level="5.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>5.2</b> Citations</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
-<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
-<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
-<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
-<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Statistical Rethinking Workbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Rethinking Workbook</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="" href="bayesian-inference.html"><span class="header-section-number">1</span> Bayesian Inference</a></li>
+<li><a class="active" href="references.html">References</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="tooling-for-building-in-bookdown.html"><span class="header-section-number">A</span> Tooling for Building in Bookdown</a></li>
+<li><a class="" href="reference-documents.html"><span class="header-section-number">B</span> Reference Documents</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s">View book source <i class="fab fa-github"></i></a></p>
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="references" class="section level1 unnumbered">
+<h1>References<a class="anchor" aria-label="anchor" href="#references"><i class="fas fa-link"></i></a>
+</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div class="csl-entry">
+<div id="ref-R-RcppParallel" class="csl-entry">
 Allaire, JJ, Romain Francois, Kevin Ushey, Gregory Vandenbrouck, Marcus Geelnard, and Intel. 2022. <em>RcppParallel: Parallel Programming Tools for Rcpp</em>. <a href="https://CRAN.R-project.org/package=RcppParallel">https://CRAN.R-project.org/package=RcppParallel</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-rmarkdown" class="csl-entry">
 Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-gridExtra" class="csl-entry">
 Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for "Grid" Graphics</em>. <a href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-magrittr" class="csl-entry">
 Bache, Stefan Milton, and Hadley Wickham. 2022. <em>Magrittr: A Forward-Pipe Operator for r</em>. <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-RcppEigen2013" class="csl-entry">
 Bates, Douglas, and Dirk Eddelbuettel. 2013. <span>“Fast and Elegant Numerical Linear Algebra Using the <span>RcppEigen</span> Package.”</span> <em>Journal of Statistical Software</em> 52 (5): 1–24. <a href="https://www.jstatsoft.org/v52/i05/">https://www.jstatsoft.org/v52/i05/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-RcppEigen" class="csl-entry">
 Bates, Douglas, Dirk Eddelbuettel, Romain Francois, and Yixuan Qiu; the authors of Eigen for the included version of Eigen. 2020. <em>RcppEigen: Rcpp Integration for the Eigen Templated Linear Algebra Library</em>. <a href="http://dirk.eddelbuettel.com/code/rcpp.eigen.html">http://dirk.eddelbuettel.com/code/rcpp.eigen.html</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-Matrix" class="csl-entry">
 Bates, Douglas, and Martin Maechler. 2021. <em>Matrix: Sparse and Dense Matrix Classes and Methods</em>. <a href="https://CRAN.R-project.org/package=Matrix">https://CRAN.R-project.org/package=Matrix</a>.
 </div>
-<div class="csl-entry">
-Beleites, C. 2020. <em>Arrayhelpers: Convenience Functions for Arrays</em>. <a href="http://arrayhelpers.r-forge.r-project.org/">http://arrayhelpers.r-forge.r-project.org/</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-matrixStats" class="csl-entry">
 Bengtsson, Henrik. 2021. <em>matrixStats: Functions That Apply to Rows and Columns of Matrices (and to Vectors)</em>. <a href="https://github.com/HenrikBengtsson/matrixStats">https://github.com/HenrikBengtsson/matrixStats</a>.
 </div>
-<div class="csl-entry">
-Bryan, Jennifer. 2016. <em>Cellranger: Translate Spreadsheet Cell Ranges to Rows and Columns</em>. <a href="https://github.com/rsheets/cellranger">https://github.com/rsheets/cellranger</a>.
-</div>
-<div class="csl-entry">
-———. 2021. <em>Googlesheets4: Access Google Sheets Using the Sheets API V4</em>. <a href="https://CRAN.R-project.org/package=googlesheets4">https://CRAN.R-project.org/package=googlesheets4</a>.
-</div>
-<div class="csl-entry">
-Bryan, Jennifer, Craig Citro, and Hadley Wickham. 2021. <em>Gargle: Utilities for Working with Google APIs</em>. <a href="https://CRAN.R-project.org/package=gargle">https://CRAN.R-project.org/package=gargle</a>.
-</div>
-<div class="csl-entry">
-Bryan, Jennifer, Jim Hester, David Robinson, and Hadley Wickham. 2021. <em>Reprex: Prepare Reproducible Example Code via the Clipboard</em>. <a href="https://CRAN.R-project.org/package=reprex">https://CRAN.R-project.org/package=reprex</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-posterior" class="csl-entry">
 Bürkner, Paul-Christian, Jonah Gabry, Matthew Kay, and Aki Vehtari. 2022. <em>Posterior: Tools for Working with Posterior Distributions</em>. <a href="https://CRAN.R-project.org/package=posterior">https://CRAN.R-project.org/package=posterior</a>.
 </div>
-<div class="csl-entry">
-Cameron, Allan, and Teun van den Brand. 2022. <em>Geomtextpath: Curved Text in Ggplot2</em>. <a href="https://allancameron.github.io/geomtextpath/">https://allancameron.github.io/geomtextpath/</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-fastmap" class="csl-entry">
 Chang, Winston. 2021a. <em>Fastmap: Fast Data Structures</em>. <a href="https://CRAN.R-project.org/package=fastmap">https://CRAN.R-project.org/package=fastmap</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-R6" class="csl-entry">
 ———. 2021b. <em>R6: Encapsulated Classes with Reference Semantics</em>. <a href="https://CRAN.R-project.org/package=R6">https://CRAN.R-project.org/package=R6</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-htmltools" class="csl-entry">
 Cheng, Joe, Carson Sievert, Barret Schloerke, Winston Chang, Yihui Xie, and Jeff Allen. 2021. <em>Htmltools: Tools for HTML</em>. <a href="https://github.com/rstudio/htmltools">https://github.com/rstudio/htmltools</a>.
 </div>
-<div class="csl-entry">
-Csardi, Gabor. 2016. <em>Rematch: Match Regular Expressions with a Nicer API</em>. <a href="https://github.com/MangoTheCat/rematch">https://github.com/MangoTheCat/rematch</a>.
+<div id="ref-R-prettyunits" class="csl-entry">
+Csardi, Gabor. 2020. <em>Prettyunits: Pretty, Human Readable Formatting of Quantities</em>. <a href="https://github.com/gaborcsardi/prettyunits">https://github.com/gaborcsardi/prettyunits</a>.
 </div>
-<div class="csl-entry">
-———. 2020. <em>Prettyunits: Pretty, Human Readable Formatting of Quantities</em>. <a href="https://github.com/gaborcsardi/prettyunits">https://github.com/gaborcsardi/prettyunits</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-pkgconfig" class="csl-entry">
 Csárdi, Gábor. 2019. <em>Pkgconfig: Private Configuration for r Packages</em>. <a href="https://github.com/r-lib/pkgconfig#readme">https://github.com/r-lib/pkgconfig#readme</a>.
 </div>
-<div class="csl-entry">
-———. 2020. <em>Rematch2: Tidy Output from Regular Expression Matching</em>. <a href="https://github.com/r-lib/rematch2#readme">https://github.com/r-lib/rematch2#readme</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-cli" class="csl-entry">
 ———. 2022a. <em>Cli: Helpers for Developing Command Line Interfaces</em>. <a href="https://CRAN.R-project.org/package=cli">https://CRAN.R-project.org/package=cli</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-crayon" class="csl-entry">
 ———. 2022b. <em>Crayon: Colored Terminal Output</em>. <a href="https://github.com/r-lib/crayon#readme">https://github.com/r-lib/crayon#readme</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-callr" class="csl-entry">
 Csárdi, Gábor, and Winston Chang. 2021a. <em>Callr: Call r from r</em>. <a href="https://CRAN.R-project.org/package=callr">https://CRAN.R-project.org/package=callr</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-processx" class="csl-entry">
 ———. 2021b. <em>Processx: Execute and Control System Processes</em>. <a href="https://CRAN.R-project.org/package=processx">https://CRAN.R-project.org/package=processx</a>.
 </div>
-<div class="csl-entry">
-Csárdi, Gábor, and Rich FitzJohn. 2019. <em>Progress: Terminal Progress Bars</em>. <a href="https://github.com/r-lib/progress#readme">https://github.com/r-lib/progress#readme</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-desc" class="csl-entry">
 Csárdi, Gábor, Kirill Müller, and Jim Hester. 2021. <em>Desc: Manipulate DESCRIPTION Files</em>. <a href="https://github.com/r-lib/desc#readme">https://github.com/r-lib/desc#readme</a>.
 </div>
-<div class="csl-entry">
-Csárdi, Gábor, Kuba Podgórski, and Rich Geldreich. 2021. <em>Zip: Cross-Platform Zip Compression</em>. <a href="https://github.com/r-lib/zip#readme">https://github.com/r-lib/zip#readme</a>.
-</div>
-<div class="csl-entry">
-D’Agostino McGowan, Lucy, and Jennifer Bryan. 2021. <em>Googledrive: An Interface to Google Drive</em>. <a href="https://CRAN.R-project.org/package=googledrive">https://CRAN.R-project.org/package=googledrive</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-data.table" class="csl-entry">
 Dowle, Matt, and Arun Srinivasan. 2021. <em>Data.table: Extension of ‘Data.frame‘</em>. <a href="https://CRAN.R-project.org/package=data.table">https://CRAN.R-project.org/package=data.table</a>.
 </div>
-<div class="csl-entry">
-Dutky, Steve, and Martin Maechler. 2021. <em>Bitops: Bitwise Operations</em>. <a href="https://github.com/mmaechler/R-bitops">https://github.com/mmaechler/R-bitops</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-Rcpp2013" class="csl-entry">
 Eddelbuettel, Dirk. 2013. <em>Seamless <span>R</span> and <span>C++</span> Integration with <span>Rcpp</span></em>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4614-6868-4">https://doi.org/10.1007/978-1-4614-6868-4</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-digest" class="csl-entry">
 ———. 2021. <em>Digest: Create Compact Hash Digests of r Objects</em>. <a href="https://CRAN.R-project.org/package=digest">https://CRAN.R-project.org/package=digest</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-Rcpp2018" class="csl-entry">
 Eddelbuettel, Dirk, and James Joseph Balamuta. 2018. <span>“<span class="nocase">Extending extit<span>R</span> with extit<span>C++</span>: A Brief Introduction to extit<span>Rcpp</span></span>.”</span> <em>The American Statistician</em> 72 (1): 28–36. <a href="https://doi.org/10.1080/00031305.2017.1375990">https://doi.org/10.1080/00031305.2017.1375990</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-BH" class="csl-entry">
 Eddelbuettel, Dirk, John W. Emerson, and Michael J. Kane. 2021. <em>BH: Boost c++ Header Files</em>. <a href="https://CRAN.R-project.org/package=BH">https://CRAN.R-project.org/package=BH</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-Rcpp" class="csl-entry">
 Eddelbuettel, Dirk, Romain Francois, JJ Allaire, Kevin Ushey, Qiang Kou, Nathan Russell, Inaki Ucar, Douglas Bates, and John Chambers. 2022. <em>Rcpp: Seamless r and c++ Integration</em>. <a href="https://CRAN.R-project.org/package=Rcpp">https://CRAN.R-project.org/package=Rcpp</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-Rcpp2011" class="csl-entry">
 Eddelbuettel, Dirk, and Romain François. 2011. <span>“<span>Rcpp</span>: Seamless <span>R</span> and <span>C++</span> Integration.”</span> <em>Journal of Statistical Software</em> 40 (8): 1–18. <a href="https://doi.org/10.18637/jss.v040.i08">https://doi.org/10.18637/jss.v040.i08</a>.
 </div>
-<div class="csl-entry">
-FitzJohn, Rich. 2017. <em>Ids: Generate Random Identifiers</em>. <a href="https://github.com/richfitz/ids">https://github.com/richfitz/ids</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-cmdstanr" class="csl-entry">
 Gabry, Jonah, and Rok Češnovar. 2021. <em>Cmdstanr: R Interface to CmdStan</em>.
 </div>
-<div class="csl-entry">
+<div id="ref-stringi2021" class="csl-entry">
 Gagolewski, Marek. 2021. <span>“Stringi: Fast and Portable Character String Processing in r.”</span> <em>Journal of Statistical Software</em>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-stringi" class="csl-entry">
 Gagolewski, Marek, Bartek Tartanus, others; Unicode, Inc., and others. 2021. <em>Stringi: Character String Processing Facilities</em>. <a href="https://CRAN.R-project.org/package=stringi">https://CRAN.R-project.org/package=stringi</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-yaml" class="csl-entry">
 Garbett, Shawn P, Jeremy Stephens, Kirill Simonov, Yihui Xie, Zhuoer Dong, Hadley Wickham, Jeffrey Horner, et al. 2022. <em>Yaml: Methods to Convert r Data to YAML and Back</em>. <a href="https://github.com/vubiostat/r-yaml/">https://github.com/vubiostat/r-yaml/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-viridisLite" class="csl-entry">
 Garnier, Simon. 2021. <em>viridisLite: Colorblind-Friendly Color Maps (Lite Version)</em>. <a href="https://CRAN.R-project.org/package=viridisLite">https://CRAN.R-project.org/package=viridisLite</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-fansi" class="csl-entry">
 Gaslam, Brodie. 2022. <em>Fansi: ANSI Control Sequence Aware String Functions</em>. <a href="https://github.com/brodieG/fansi">https://github.com/brodieG/fansi</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-mvtnorm2009" class="csl-entry">
 Genz, Alan, and Frank Bretz. 2009. <em>Computation of Multivariate Normal and t Probabilities</em>. Lecture Notes in Statistics. Heidelberg: Springer-Verlag.
 </div>
-<div class="csl-entry">
+<div id="ref-R-mvtnorm" class="csl-entry">
 Genz, Alan, Frank Bretz, Tetsuhisa Miwa, Xuefei Mi, and Torsten Hothorn. 2021. <em>Mvtnorm: Multivariate Normal and t Distributions</em>. <a href="http://mvtnorm.R-forge.R-project.org">http://mvtnorm.R-forge.R-project.org</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-numDeriv" class="csl-entry">
 Gilbert, Paul, and Ravi Varadhan. 2019. <em>numDeriv: Accurate Numerical Derivatives</em>. <a href="http://optimizer.r-forge.r-project.org/">http://optimizer.r-forge.r-project.org/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-StanHeaders" class="csl-entry">
 Goodrich, Ben, Andrew Gelman, Bob Carpenter, Matt Hoffman, Daniel Lee, Michael Betancourt, Marcus Brubaker, et al. 2020. <em>StanHeaders: C++ Header Files for Stan</em>. <a href="https://mc-stan.org/">https://mc-stan.org/</a>.
 </div>
-<div class="csl-entry">
-Grolemund, Garrett, and Hadley Wickham. 2011. <span>“Dates and Times Made Easy with <span class="nocase">lubridate</span>.”</span> <em>Journal of Statistical Software</em> 40 (3): 1–25. <a href="https://www.jstatsoft.org/v40/i03/">https://www.jstatsoft.org/v40/i03/</a>.
+<div id="ref-grolemund" class="csl-entry">
+Grolemund, Yihui Xie, J. J. Allaire, Garrett. n.d. <em>R Markdown: The Definitive Guide</em>. <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.
 </div>
-<div class="csl-entry">
-Grosjean, Philippe. 2021a. <em>SciViews-r</em>. MONS, Belgium: UMONS. <a href="https://www.sciviews.org/SciViews-R/">https://www.sciviews.org/SciViews-R/</a>.
-</div>
-<div class="csl-entry">
-———. 2021b. <em>svUnit: SciViews - Unit, Integration and System Testing</em>. <a href="https://CRAN.R-project.org/package=svUnit">https://CRAN.R-project.org/package=svUnit</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-rstan" class="csl-entry">
 Guo, Jiqiang, Jonah Gabry, Ben Goodrich, and Sebastian Weber. 2021. <em>Rstan: R Interface to Stan</em>. <a href="https://CRAN.R-project.org/package=rstan">https://CRAN.R-project.org/package=rstan</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-purrr" class="csl-entry">
 Henry, Lionel, and Hadley Wickham. 2020. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-lifecycle" class="csl-entry">
 ———. 2021. <em>Lifecycle: Manage the Life Cycle of Your Package Functions</em>. <a href="https://CRAN.R-project.org/package=lifecycle">https://CRAN.R-project.org/package=lifecycle</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-rlang" class="csl-entry">
 ———. 2022a. <em>Rlang: Functions for Base Types and Core r and Tidyverse Features</em>. <a href="https://CRAN.R-project.org/package=rlang">https://CRAN.R-project.org/package=rlang</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-tidyselect" class="csl-entry">
 ———. 2022b. <em>Tidyselect: Select from a Set of Strings</em>. <a href="https://CRAN.R-project.org/package=tidyselect">https://CRAN.R-project.org/package=tidyselect</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-glue" class="csl-entry">
 Hester, Jim, and Jennifer Bryan. 2022. <em>Glue: Interpreted String Literals</em>. <a href="https://CRAN.R-project.org/package=glue">https://CRAN.R-project.org/package=glue</a>.
 </div>
-<div class="csl-entry">
-Hester, Jim, and Romain François. 2021. <em>Cpp11: A c++11 Interface for r’s c Interface</em>. <a href="https://CRAN.R-project.org/package=cpp11">https://CRAN.R-project.org/package=cpp11</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-withr" class="csl-entry">
 Hester, Jim, Lionel Henry, Kirill Müller, Kevin Ushey, Hadley Wickham, and Winston Chang. 2021. <em>Withr: Run Code with Temporarily Modified Global State</em>. <a href="https://CRAN.R-project.org/package=withr">https://CRAN.R-project.org/package=withr</a>.
 </div>
-<div class="csl-entry">
-Hester, Jim, Hadley Wickham, and Jennifer Bryan. 2021. <em>Vroom: Read and Write Rectangular Text Data Quickly</em>. <a href="https://CRAN.R-project.org/package=vroom">https://CRAN.R-project.org/package=vroom</a>.
-</div>
-<div class="csl-entry">
-Hester, Jim, Hadley Wickham, and Gábor Csárdi. 2021. <em>Fs: Cross-Platform File System Operations Based on Libuv</em>. <a href="https://CRAN.R-project.org/package=fs">https://CRAN.R-project.org/package=fs</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-colorspace" class="csl-entry">
 Ihaka, Ross, Paul Murrell, Kurt Hornik, Jason C. Fisher, Reto Stauffer, Claus O. Wilke, Claire D. McWhite, and Achim Zeileis. 2022. <em>Colorspace: A Toolbox for Manipulating and Assessing Colors and Palettes</em>. <a href="https://CRAN.R-project.org/package=colorspace">https://CRAN.R-project.org/package=colorspace</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-labeling" class="csl-entry">
 Justin Talbot. 2020. <em>Labeling: Axis Labeling</em>. <a href="https://CRAN.R-project.org/package=labeling">https://CRAN.R-project.org/package=labeling</a>.
 </div>
-<div class="csl-entry">
-Kay, Matthew. 2022a. <em>Ggdist: Visualizations of Distributions and Uncertainty</em>. <a href="https://CRAN.R-project.org/package=ggdist">https://CRAN.R-project.org/package=ggdist</a>.
+<div id="ref-kurz" class="csl-entry">
+Kurz, A. Solomon. n.d. <em>Statistical Rethinking with Brms, Ggplot2, and the Tidyverse: Second Edition</em>. <a href="https://bookdown.org/content/4857">https://bookdown.org/content/4857</a>.
 </div>
-<div class="csl-entry">
-———. 2022b. <em>Tidybayes: Tidy Data and Geoms for Bayesian Models</em>. <a href="https://CRAN.R-project.org/package=tidybayes">https://CRAN.R-project.org/package=tidybayes</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-checkmate" class="csl-entry">
 Lang, Michel. 2017. <span>“<span class="nocase">checkmate</span>: Fast Argument Checks for Defensive r Programming.”</span> <em>The R Journal</em> 9 (1): 437–45. <a href="https://journal.r-project.org/archive/2017/RJ-2017-028/index.html">https://journal.r-project.org/archive/2017/RJ-2017-028/index.html</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-checkmate" class="csl-entry">
 ———. 2020. <em>Checkmate: Fast and Versatile Argument Checks</em>. <a href="https://github.com/mllg/checkmate">https://github.com/mllg/checkmate</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-backports" class="csl-entry">
 Lang, Michel, and R Core Team. 2021. <em>Backports: Reimplementations of Functions Introduced Since r-3.0.0</em>. <a href="https://github.com/r-lib/backports">https://github.com/r-lib/backports</a>.
 </div>
-<div class="csl-entry">
-Lares, Bernardo. 2022. <em>Lares: Analytics &amp; Machine Learning Sidekick</em>. <a href="https://CRAN.R-project.org/package=lares">https://CRAN.R-project.org/package=lares</a>.
-</div>
-<div class="csl-entry">
-LeDell, Erin, Navdeep Gill, Spencer Aiello, Anqi Fu, Arno Candel, Cliff Click, Tom Kraljevic, et al. 2022. <em>H2o: R Interface for the H2o Scalable Machine Learning Platform</em>. <a href="https://github.com/h2oai/h2o-3">https://github.com/h2oai/h2o-3</a>.
-</div>
-<div class="csl-entry">
-Lincoln, Matthew. 2022. <em>Clipr: Read and Write from the System Clipboard</em>. <a href="https://CRAN.R-project.org/package=clipr">https://CRAN.R-project.org/package=clipr</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-ps" class="csl-entry">
 Loden, Jay, Dave Daeschler, Giampaolo Rodola’, and Gábor Csárdi. 2021. <em>Ps: List, Query, Manipulate System Processes</em>. <a href="https://github.com/r-lib/ps#readme">https://github.com/r-lib/ps#readme</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-mcelreath2020" class="csl-entry">
 McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. CRC Texts in Statistical Science. Boca Raton: Taylor; Francis, CRC Press.
 </div>
-<div class="csl-entry">
+<div id="ref-R-rethinking" class="csl-entry">
 ———. 2021. <em>Rethinking: Statistical Rethinking Book Package</em>.
 </div>
-<div class="csl-entry">
-———. 2022. <span>“Statistical Rethinking 2022.”</span> <a href="https://github.com/rmcelreath/stat_rethinking_2022">https://github.com/rmcelreath/stat_rethinking_2022</a>.
+<div id="ref-mcelreath2022" class="csl-entry">
+———. 2022b. <span>“Statistical Rethinking 2022.”</span> <a href="https://github.com/rmcelreath/stat_rethinking_2022">https://github.com/rmcelreath/stat_rethinking_2022</a>.
 </div>
-<div class="csl-entry">
-Meredith, Mike, and John Kruschke. 2020. <em>HDInterval: Highest (Posterior) Density Intervals</em>. <a href="https://CRAN.R-project.org/package=HDInterval">https://CRAN.R-project.org/package=HDInterval</a>.
+<div id="ref-mcelreath2022a" class="csl-entry">
+———. 2022a. <span>“Statistical Rethinking 2022.”</span> <a href="https://github.com/rmcelreath/stat_rethinking_2022">https://github.com/rmcelreath/stat_rethinking_2022</a>.
 </div>
-<div class="csl-entry">
-Milborrow, Stephen. 2021. <em>Rpart.plot: Plot Rpart Models: An Enhanced Version of Plot.rpart</em>. <a href="http://www.milbo.org/rpart-plot/index.html">http://www.milbo.org/rpart-plot/index.html</a>.
+<div id="ref-mcelreath" class="csl-entry">
+———. n.d. <span>“Rethinking Package.”</span> <a href="https://github.com/rmcelreath/rethinking/">https://github.com/rmcelreath/rethinking/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-rprojroot" class="csl-entry">
 Müller, Kirill. 2020. <em>Rprojroot: Finding Files in Project Subdirectories</em>. <a href="https://CRAN.R-project.org/package=rprojroot">https://CRAN.R-project.org/package=rprojroot</a>.
 </div>
-<div class="csl-entry">
-———. 2021. <em>Hms: Pretty Time of Day</em>. <a href="https://CRAN.R-project.org/package=hms">https://CRAN.R-project.org/package=hms</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-tibble" class="csl-entry">
 Müller, Kirill, and Hadley Wickham. 2021. <em>Tibble: Simple Data Frames</em>. <a href="https://CRAN.R-project.org/package=tibble">https://CRAN.R-project.org/package=tibble</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-pillar" class="csl-entry">
 ———. 2022. <em>Pillar: Coloured Formatting for Columns</em>. <a href="https://CRAN.R-project.org/package=pillar">https://CRAN.R-project.org/package=pillar</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-RColorBrewer" class="csl-entry">
 Neuwirth, Erich. 2014. <em>RColorBrewer: ColorBrewer Palettes</em>. <a href="https://CRAN.R-project.org/package=RColorBrewer">https://CRAN.R-project.org/package=RColorBrewer</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-distributional" class="csl-entry">
 O’Hara-Wild, Mitchell, Matthew Kay, and Alex Hayes. 2022. <em>Distributional: Vectorised Probability Distributions</em>. <a href="https://CRAN.R-project.org/package=distributional">https://CRAN.R-project.org/package=distributional</a>.
 </div>
-<div class="csl-entry">
-Oehlschlägel, Jens, and Brian Ripley. 2020. <em>Bit: Classes and Methods for Fast Memory-Efficient Boolean Selections</em>. <a href="https://github.com/truecluster/bit">https://github.com/truecluster/bit</a>.
-</div>
-<div class="csl-entry">
-Oehlschlägel, Jens, and Leonardo Silvestri. 2020. <em>Bit64: A S3 Class for Vectors of 64bit Integers</em>. <a href="https://github.com/truecluster/bit64">https://github.com/truecluster/bit64</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-jsonlite2014" class="csl-entry">
 Ooms, Jeroen. 2014. <span>“The Jsonlite Package: A Practical and Consistent Mapping Between JSON Data and r Objects.”</span> <em>arXiv:1403.2805 [Stat.CO]</em>. <a href="https://arxiv.org/abs/1403.2805">https://arxiv.org/abs/1403.2805</a>.
 </div>
-<div class="csl-entry">
-———. 2019. <em>Askpass: Safe Password Entry for r, Git, and SSH</em>. <a href="https://github.com/jeroen/askpass#readme">https://github.com/jeroen/askpass#readme</a>.
-</div>
-<div class="csl-entry">
-———. 2020. <em>Sys: Powerful and Reliable Tools for Running System Commands in r</em>. <a href="https://github.com/jeroen/sys">https://github.com/jeroen/sys</a>.
-</div>
-<div class="csl-entry">
-———. 2021a. <em>Curl: A Modern and Flexible Web Client for r</em>. <a href="https://CRAN.R-project.org/package=curl">https://CRAN.R-project.org/package=curl</a>.
-</div>
-<div class="csl-entry">
-———. 2021b. <em>Openssl: Toolkit for Encryption, Signatures and Certificates Based on OpenSSL</em>. <a href="https://github.com/jeroen/openssl">https://github.com/jeroen/openssl</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-jsonlite" class="csl-entry">
 ———. 2022. <em>Jsonlite: A Simple and Robust JSON Parser and Generator for r</em>. <a href="https://CRAN.R-project.org/package=jsonlite">https://CRAN.R-project.org/package=jsonlite</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-patchwork" class="csl-entry">
 Pedersen, Thomas Lin. 2020. <em>Patchwork: The Composer of Plots</em>. <a href="https://CRAN.R-project.org/package=patchwork">https://CRAN.R-project.org/package=patchwork</a>.
 </div>
-<div class="csl-entry">
-———. 2021. <em>Textshaping: Bindings to the HarfBuzz and Fribidi Libraries for Text Shaping</em>. <a href="https://github.com/r-lib/textshaping">https://github.com/r-lib/textshaping</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-farver" class="csl-entry">
 Pedersen, Thomas Lin, Berendea Nicolae, and Romain François. 2021. <em>Farver: High Performance Colour Space Manipulation</em>. <a href="https://CRAN.R-project.org/package=farver">https://CRAN.R-project.org/package=farver</a>.
 </div>
-<div class="csl-entry">
-Pedersen, Thomas Lin, Jeroen Ooms, and Devon Govett. 2022. <em>Systemfonts: System Native Font Finding</em>. <a href="https://github.com/r-lib/systemfonts">https://github.com/r-lib/systemfonts</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-utf8" class="csl-entry">
 Perry, Patrick O. 2021. <em>Utf8: Unicode Text Processing</em>. <a href="https://CRAN.R-project.org/package=utf8">https://CRAN.R-project.org/package=utf8</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-nlme" class="csl-entry">
 Pinheiro, José, Douglas Bates, and R-core. 2022. <em>Nlme: Linear and Nonlinear Mixed Effects Models</em>. <a href="https://svn.r-project.org/R-packages/trunk/nlme/">https://svn.r-project.org/R-packages/trunk/nlme/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-abind" class="csl-entry">
 Plate, Tony, and Richard Heiberger. 2016. <em>Abind: Combine Multidimensional Arrays</em>. <a href="https://CRAN.R-project.org/package=abind">https://CRAN.R-project.org/package=abind</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-coda2006" class="csl-entry">
 Plummer, Martyn, Nicky Best, Kate Cowles, and Karen Vines. 2006. <span>“CODA: Convergence Diagnosis and Output Analysis for MCMC.”</span> <em>R News</em> 6 (1): 7–11. <a href="https://journal.r-project.org/archive/">https://journal.r-project.org/archive/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-coda" class="csl-entry">
 Plummer, Martyn, Nicky Best, Kate Cowles, Karen Vines, Deepayan Sarkar, Douglas Bates, Russell Almond, and Arni Magnusson. 2020. <em>Coda: Output Analysis and Diagnostics for MCMC</em>. <a href="https://CRAN.R-project.org/package=coda">https://CRAN.R-project.org/package=coda</a>.
 </div>
-<div class="csl-entry">
-Potter, Simon. 2012. <span>“Introducing the Selectr Package.”</span> Auckland, New Zealand: The University of Auckland. <a href="http://stattech.wordpress.fos.auckland.ac.nz/2012-10-introducing-the-selectr-package/">http://stattech.wordpress.fos.auckland.ac.nz/2012-10-introducing-the-selectr-package/</a>.
+<div id="ref-riederer" class="csl-entry">
+Riederer, Yihui Xie, Christophe Dervieux, Emily. n.d. <em>R Markdown Cookbook</em>. <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">https://bookdown.org/yihui/rmarkdown-cookbook/</a>.
 </div>
-<div class="csl-entry">
-Potter, Simon, Simon Sapin, and Ian Bicking. 2019. <em>Selectr: Translate CSS Selectors to XPath Expressions</em>. <a href="https://sjp.co.nz/projects/selectr">https://sjp.co.nz/projects/selectr</a>.
-</div>
-<div class="csl-entry">
-R Special Interest Group on Databases (R-SIG-DB), Hadley Wickham, and Kirill Müller. 2021. <em>DBI: R Database Interface</em>. <a href="https://CRAN.R-project.org/package=DBI">https://CRAN.R-project.org/package=DBI</a>.
-</div>
-<div class="csl-entry">
-Ratnakumar, Sridhar, Trent Mick, and Trevor Davis. 2021. <em>Rappdirs: Application Directories: Determine Where to Save Data, Caches, and Logs</em>. <a href="https://CRAN.R-project.org/package=rappdirs">https://CRAN.R-project.org/package=rappdirs</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-MASS" class="csl-entry">
 Ripley, Brian. 2022. <em>MASS: Support Functions and Datasets for Venables and Ripley’s MASS</em>. <a href="http://www.stats.ox.ac.uk/pub/MASS4/">http://www.stats.ox.ac.uk/pub/MASS4/</a>.
 </div>
-<div class="csl-entry">
-Robin, Xavier, Natacha Turck, Alexandre Hainard, Natalia Tiberti, Frédérique Lisacek, Jean-Charles Sanchez, and Markus Müller. 2011. <span>“pROC: An Open-Source Package for r and s+ to Analyze and Compare ROC Curves.”</span> <em>BMC Bioinformatics</em> 12: 77.
-</div>
-<div class="csl-entry">
-———. 2021. <em>pROC: Display and Analyze ROC Curves</em>. <a href="http://expasy.org/tools/pROC/">http://expasy.org/tools/pROC/</a>.
-</div>
-<div class="csl-entry">
-Robinson, David, Alex Hayes, and Simon Couch. 2022. <em>Broom: Convert Statistical Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-rstudioIDE2020" class="csl-entry">
 RStudio Team. 2020. <em>RStudio: Integrated Development Environment for r</em>. Boston, MA: RStudio, PBC. <a href="http://www.rstudio.com/">http://www.rstudio.com/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-lattice2008" class="csl-entry">
 Sarkar, Deepayan. 2008. <em>Lattice: Multivariate Data Visualization with r</em>. New York: Springer. <a href="http://lmdvr.r-forge.r-project.org">http://lmdvr.r-forge.r-project.org</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-lattice" class="csl-entry">
 ———. 2021. <em>Lattice: Trellis Graphics for r</em>. <a href="http://lattice.r-forge.r-project.org/">http://lattice.r-forge.r-project.org/</a>.
 </div>
-<div class="csl-entry">
-Schauberger, Philipp, and Alexander Walker. 2021. <em>Openxlsx: Read, Write and Edit Xlsx Files</em>. <a href="https://CRAN.R-project.org/package=openxlsx">https://CRAN.R-project.org/package=openxlsx</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-jquerylib" class="csl-entry">
 Sievert, Carson, and Joe Cheng. 2021. <em>Jquerylib: Obtain jQuery as an HTML Dependency Object</em>. <a href="https://CRAN.R-project.org/package=jquerylib">https://CRAN.R-project.org/package=jquerylib</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-inline" class="csl-entry">
 Sklyar, Oleg, Duncan Murdoch, Mike Smith, Dirk Eddelbuettel, Romain Francois, Karline Soetaert, and Johannes Ranke. 2021. <em>Inline: Functions to Inline c, c++, Fortran Function Calls from r</em>. <a href="https://CRAN.R-project.org/package=inline">https://CRAN.R-project.org/package=inline</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-shape" class="csl-entry">
 Soetaert, Karline. 2021. <em>Shape: Functions for Plotting Graphical Shapes, Colors</em>. <a href="https://CRAN.R-project.org/package=shape">https://CRAN.R-project.org/package=shape</a>.
 </div>
-<div class="csl-entry">
-Spinu, Vitalie, Garrett Grolemund, and Hadley Wickham. 2021. <em>Lubridate: Make Dealing with Dates a Little Easier</em>. <a href="https://CRAN.R-project.org/package=lubridate">https://CRAN.R-project.org/package=lubridate</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-colorspace2009b" class="csl-entry">
 Stauffer, Reto, Georg J. Mayr, Markus Dabernig, and Achim Zeileis. 2009. <span>“Somewhere over the Rainbow: How to Make Effective Use of Colors in Meteorological Visualizations.”</span> <em>Bulletin of the American Meteorological Society</em> 96 (2): 203–16. <a href="https://doi.org/10.1175/BAMS-D-13-00155.1">https://doi.org/10.1175/BAMS-D-13-00155.1</a>.
 </div>
-<div class="csl-entry">
-Temple Lang, Duncan. 2022. <em>RCurl: General Network (HTTP/FTP/...) Client Interface for r</em>. <a href="https://CRAN.R-project.org/package=RCurl">https://CRAN.R-project.org/package=RCurl</a>.
+<div id="ref-thompson" class="csl-entry">
+Thompson, Jake. n.d. <em>Welcome | Statistical Rethinking: Solutions (2nd Edition)</em>. <a href="https://sr2-solutions.wjakethompson.com">https://sr2-solutions.wjakethompson.com</a>.
 </div>
-<div class="csl-entry">
-Therneau, Terry, and Beth Atkinson. 2022. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-base64enc" class="csl-entry">
 Urbanek, Simon. 2015. <em>Base64enc: Tools for Base64 Encoding</em>. <a href="http://www.rforge.net/base64enc">http://www.rforge.net/base64enc</a>.
 </div>
-<div class="csl-entry">
-Urbanek, Simon, and Theodore Ts’o. 2021. <em>Uuid: Tools for Generating and Handling of UUIDs</em>. <a href="http://www.rforge.net/uuid">http://www.rforge.net/uuid</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-renv" class="csl-entry">
 Ushey, Kevin. 2021. <em>Renv: Project Environments</em>. <a href="https://rstudio.github.io/renv/">https://rstudio.github.io/renv/</a>.
 </div>
-<div class="csl-entry">
-Ushey, Kevin, JJ Allaire, Hadley Wickham, and Gary Ritchie. 2020. <em>Rstudioapi: Safely Access the RStudio API</em>. <a href="https://github.com/rstudio/rstudioapi">https://github.com/rstudio/rstudioapi</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-tensorA" class="csl-entry">
 van den Boogaart, K. Gerald. 2020. <em>tensorA: Advanced Tensor Arithmetic with Named Indices</em>. <a href="http://www.stat.boogaart.de/tensorA">http://www.stat.boogaart.de/tensorA</a>.
 </div>
-<div class="csl-entry">
-Vaughan, Davis. 2021. <em>Tzdb: Time Zone Database Information</em>. <a href="https://CRAN.R-project.org/package=tzdb">https://CRAN.R-project.org/package=tzdb</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-loo" class="csl-entry">
 Vehtari, Aki, Jonah Gabry, Mans Magnusson, Yuling Yao, Paul-Christian Bürkner, Topi Paananen, and Andrew Gelman. 2020. <em>Loo: Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models</em>. <a href="https://CRAN.R-project.org/package=loo">https://CRAN.R-project.org/package=loo</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-loo2017a" class="csl-entry">
 Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2017. <span>“Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.”</span> <em>Statistics and Computing</em> 27: 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-posterior2021" class="csl-entry">
 Vehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. 2021. <span>“Rank-Normalization, Folding, and Localization: An Improved Rhat for Assessing Convergence of MCMC (with Discussion).”</span> <em>Bayesian Analysis</em>.
 </div>
-<div class="csl-entry">
+<div id="ref-MASS2002" class="csl-entry">
 Venables, W. N., and B. D. Ripley. 2002. <em>Modern Applied Statistics with s</em>. Fourth. New York: Springer. <a href="https://www.stats.ox.ac.uk/pub/MASS4/">https://www.stats.ox.ac.uk/pub/MASS4/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-munsell" class="csl-entry">
 Wickham, Charlotte. 2018. <em>Munsell: Utilities for Using Munsell Colours</em>. <a href="https://CRAN.R-project.org/package=munsell">https://CRAN.R-project.org/package=munsell</a>.
 </div>
-<div class="csl-entry">
-Wickham, Hadley. 2011. <span>“The Split-Apply-Combine Strategy for Data Analysis.”</span> <em>Journal of Statistical Software</em> 40 (1): 1–29. <a href="http://www.jstatsoft.org/v40/i01/">http://www.jstatsoft.org/v40/i01/</a>.
+<div id="ref-ggplot22016" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
 </div>
-<div class="csl-entry">
-———. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+<div id="ref-R-stringr" class="csl-entry">
+———. 2019. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.
 </div>
-<div class="csl-entry">
-———. 2019a. <em>Assertthat: Easy Pre and Post Assertions</em>. <a href="https://CRAN.R-project.org/package=assertthat">https://CRAN.R-project.org/package=assertthat</a>.
+<div id="ref-R-ellipsis" class="csl-entry">
+———. 2021. <em>Ellipsis: Tools for Working with ...</em> <a href="https://CRAN.R-project.org/package=ellipsis">https://CRAN.R-project.org/package=ellipsis</a>.
 </div>
-<div class="csl-entry">
-———. 2019b. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.
-</div>
-<div class="csl-entry">
-———. 2020a. <em>Httr: Tools for Working with URLs and HTTP</em>. <a href="https://CRAN.R-project.org/package=httr">https://CRAN.R-project.org/package=httr</a>.
-</div>
-<div class="csl-entry">
-———. 2020b. <em>Modelr: Modelling Functions That Work with the Pipe</em>. <a href="https://CRAN.R-project.org/package=modelr">https://CRAN.R-project.org/package=modelr</a>.
-</div>
-<div class="csl-entry">
-———. 2020c. <em>Plyr: Tools for Splitting, Applying and Combining Data</em>. <a href="https://CRAN.R-project.org/package=plyr">https://CRAN.R-project.org/package=plyr</a>.
-</div>
-<div class="csl-entry">
-———. 2021a. <em>Blob: A Simple S3 Class for Representing Vectors of Binary Data (BLOBS)</em>. <a href="https://CRAN.R-project.org/package=blob">https://CRAN.R-project.org/package=blob</a>.
-</div>
-<div class="csl-entry">
-———. 2021b. <em>Ellipsis: Tools for Working with ...</em> <a href="https://CRAN.R-project.org/package=ellipsis">https://CRAN.R-project.org/package=ellipsis</a>.
-</div>
-<div class="csl-entry">
-———. 2021c. <em>Forcats: Tools for Working with Categorical Variables (Factors)</em>. <a href="https://CRAN.R-project.org/package=forcats">https://CRAN.R-project.org/package=forcats</a>.
-</div>
-<div class="csl-entry">
-———. 2021d. <em>Rvest: Easily Harvest (Scrape) Web Pages</em>. <a href="https://CRAN.R-project.org/package=rvest">https://CRAN.R-project.org/package=rvest</a>.
-</div>
-<div class="csl-entry">
-———. 2021e. <em>Tidyverse: Easily Install and Load the Tidyverse</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.
-</div>
-<div class="csl-entry">
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
-</div>
-<div class="csl-entry">
-Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-ggplot2" class="csl-entry">
 Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-dplyr" class="csl-entry">
 Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
 </div>
-<div class="csl-entry">
-Wickham, Hadley, and Maximilian Girlich. 2022. <em>Tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
-</div>
-<div class="csl-entry">
-Wickham, Hadley, Maximilian Girlich, Mark Fairbanks, and Ryan Dickerson. 2022. <em>Dtplyr: Data Table Back-End for Dplyr</em>. <a href="https://CRAN.R-project.org/package=dtplyr">https://CRAN.R-project.org/package=dtplyr</a>.
-</div>
-<div class="csl-entry">
-Wickham, Hadley, Maximilian Girlich, and Edgar Ruiz. 2021. <em>Dbplyr: A Dplyr Back End for Databases</em>. <a href="https://CRAN.R-project.org/package=dbplyr">https://CRAN.R-project.org/package=dbplyr</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-vctrs" class="csl-entry">
 Wickham, Hadley, Lionel Henry, and Davis Vaughan. 2021. <em>Vctrs: Vector Helpers</em>. <a href="https://vctrs.r-lib.org/">https://vctrs.r-lib.org/</a>.
 </div>
-<div class="csl-entry">
-Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2022. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-pkgbuild" class="csl-entry">
 Wickham, Hadley, Jim Hester, and Gábor Csárdi. 2021. <em>Pkgbuild: Find Tools Needed to Build r Packages</em>. <a href="https://github.com/r-lib/pkgbuild">https://github.com/r-lib/pkgbuild</a>.
 </div>
-<div class="csl-entry">
-Wickham, Hadley, Jim Hester, and Jeroen Ooms. 2021. <em>Xml2: Parse XML</em>. <a href="https://CRAN.R-project.org/package=xml2">https://CRAN.R-project.org/package=xml2</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-generics" class="csl-entry">
 Wickham, Hadley, Max Kuhn, and Davis Vaughan. 2022. <em>Generics: Common S3 Generics Not Provided by Base r Methods Related to Model Fitting</em>. <a href="https://CRAN.R-project.org/package=generics">https://CRAN.R-project.org/package=generics</a>.
 </div>
-<div class="csl-entry">
-Wickham, Hadley, and Evan Miller. 2021. <em>Haven: Import and Export SPSS, Stata and SAS Files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-gtable" class="csl-entry">
 Wickham, Hadley, and Thomas Lin Pedersen. 2019. <em>Gtable: Arrange Grobs in Tables</em>. <a href="https://github.com/r-lib/gtable">https://github.com/r-lib/gtable</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-scales" class="csl-entry">
 Wickham, Hadley, and Dana Seidel. 2020. <em>Scales: Scale Functions for Visualization</em>. <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-evaluate" class="csl-entry">
 Wickham, Hadley, and Yihui Xie. 2022. <em>Evaluate: Parsing and Evaluation Tools That Provide More Details Than the Default</em>. <a href="https://github.com/r-lib/evaluate">https://github.com/r-lib/evaluate</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-isoband" class="csl-entry">
 Wilke, Claus O., and Thomas Lin Pedersen. 2021. <em>Isoband: Generate Isolines and Isobands from Regularly Spaced Elevation Grids</em>. <a href="https://wilkelab.org/isoband/">https://wilkelab.org/isoband/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-mgcv2003" class="csl-entry">
 Wood, S. N. 2003. <span>“Thin-Plate Regression Splines.”</span> <em>Journal of the Royal Statistical Society (B)</em> 65 (1): 95–114.
 </div>
-<div class="csl-entry">
+<div id="ref-mgcv2004" class="csl-entry">
 ———. 2004. <span>“Stable and Efficient Multiple Smoothing Parameter Estimation for Generalized Additive Models.”</span> <em>Journal of the American Statistical Association</em> 99 (467): 673–86.
 </div>
-<div class="csl-entry">
+<div id="ref-mgcv2011" class="csl-entry">
 ———. 2011. <span>“Fast Stable Restricted Maximum Likelihood and Marginal Likelihood Estimation of Semiparametric Generalized Linear Models.”</span> <em>Journal of the Royal Statistical Society (B)</em> 73 (1): 3–36.
 </div>
-<div class="csl-entry">
+<div id="ref-mgcv2017" class="csl-entry">
 Wood, S. N. 2017. <em>Generalized Additive Models: An Introduction with r</em>. 2nd ed. Chapman; Hall/CRC.
 </div>
-<div class="csl-entry">
+<div id="ref-mgcv2016" class="csl-entry">
 Wood, S. N., N., Pya, and B. S"afken. 2016. <span>“Smoothing Parameter and Model Selection for General Smooth Models (with Discussion).”</span> <em>Journal of the American Statistical Association</em> 111: 1548–75.
 </div>
-<div class="csl-entry">
+<div id="ref-R-mgcv" class="csl-entry">
 Wood, Simon. 2022. <em>Mgcv: Mixed GAM Computation Vehicle with Automatic Smoothness Estimation</em>. <a href="https://CRAN.R-project.org/package=mgcv">https://CRAN.R-project.org/package=mgcv</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-knitr2014" class="csl-entry">
 Xie, Yihui. 2014. <span>“Knitr: A Comprehensive Tool for Reproducible Research in <span>R</span>.”</span> In <em>Implementing Reproducible Computational Research</em>, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. <a href="http://www.crcpress.com/product/isbn/9781466561595">http://www.crcpress.com/product/isbn/9781466561595</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-knitr2015" class="csl-entry">
 ———. 2015. <em>Dynamic Documents with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-bookdown2016" class="csl-entry">
 ———. 2016. <em>Bookdown: Authoring Books and Technical Documents with <span>R</span> Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/bookdown">https://bookdown.org/yihui/bookdown</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-tinytex2019" class="csl-entry">
 ———. 2019. <span>“TinyTeX: A Lightweight, Cross-Platform, and Easy-to-Maintain LaTeX Distribution Based on TeX Live.”</span> <em>TUGboat</em>, no. 1: 30–32. <a href="https://tug.org/TUGboat/Contents/contents40-1.html">https://tug.org/TUGboat/Contents/contents40-1.html</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-bookdown" class="csl-entry">
 ———. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-knitr" class="csl-entry">
 ———. 2021b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
 </div>
-<div class="csl-entry">
-———. 2021c. <em>Mime: Map Filenames to MIME Types</em>. <a href="https://github.com/yihui/mime">https://github.com/yihui/mime</a>.
+<div id="ref-R-xfun" class="csl-entry">
+———. 2021c. <em>Xfun: Supporting Functions for Packages Maintained by Yihui Xie</em>. <a href="https://github.com/yihui/xfun">https://github.com/yihui/xfun</a>.
 </div>
-<div class="csl-entry">
-———. 2021d. <em>Xfun: Supporting Functions for Packages Maintained by Yihui Xie</em>. <a href="https://github.com/yihui/xfun">https://github.com/yihui/xfun</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-R-tinytex" class="csl-entry">
 ———. 2022. <em>Tinytex: Helper Functions to Install and Maintain TeX Live, and Compile LaTeX Documents</em>. <a href="https://github.com/yihui/tinytex">https://github.com/yihui/tinytex</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-xie" class="csl-entry">
+———. n.d. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://bookdown.org/yihui/bookdown/">https://bookdown.org/yihui/bookdown/</a>.
+</div>
+<div id="ref-rmarkdown2018" class="csl-entry">
 Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <em>R Markdown: The Definitive Guide</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown">https://bookdown.org/yihui/rmarkdown</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-rmarkdown2020" class="csl-entry">
 Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. <em>R Markdown Cookbook</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">https://bookdown.org/yihui/rmarkdown-cookbook</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-highr" class="csl-entry">
 Xie, Yihui, and Yixuan Qiu. 2021. <em>Highr: Syntax Highlighting for r Source Code</em>. <a href="https://github.com/yihui/highr">https://github.com/yihui/highr</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-loo2017b" class="csl-entry">
 Yao, Yuling, Aki Vehtari, Daniel Simpson, and Andrew Gelman. 2017. <span>“Using Stacking to Average Bayesian Predictive Distributions.”</span> <em>Bayesian Analysis</em>. <a href="https://doi.org/10.1214/17-BA1091">https://doi.org/10.1214/17-BA1091</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-colorspace2020a" class="csl-entry">
 Zeileis, Achim, Jason C. Fisher, Kurt Hornik, Ross Ihaka, Claire D. McWhite, Paul Murrell, Reto Stauffer, and Claus O. Wilke. 2020. <span>“<span class="nocase">colorspace</span>: A Toolbox for Manipulating and Assessing Colors and Palettes.”</span> <em>Journal of Statistical Software</em> 96 (1): 1–49. <a href="https://doi.org/10.18637/jss.v096.i01">https://doi.org/10.18637/jss.v096.i01</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-colorspace2009a" class="csl-entry">
 Zeileis, Achim, Kurt Hornik, and Paul Murrell. 2009. <span>“Escaping <span>RGB</span>land: Selecting Colors for Statistical Graphics.”</span> <em>Computational Statistics &amp; Data Analysis</em> 53 (9): 3259–70. <a href="https://doi.org/10.1016/j.csda.2008.11.033">https://doi.org/10.1016/j.csda.2008.11.033</a>.
 </div>
 </div>
@@ -776,83 +427,36 @@ Zeileis, Achim, Kurt Hornik, and Paul Murrell. 2009. <span>“Escaping <span>RGB
 
 
 
+  <div class="chapter-nav">
+<div class="prev"><a href="bayesian-inference.html"><span class="header-section-number">1</span> Bayesian Inference</a></div>
+<div class="next"><a href="tooling-for-building-in-bookdown.html"><span class="header-section-number">A</span> Tooling for Building in Bookdown</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#references">References</a></li></ul>
 
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s/blob/main/99-appendix.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/agberg/statistical_rethinking_workbook/edit/main/%s/edit/main/99-appendix.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
 
+</div>
+</div> <!-- .container -->
 
-            </section>
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
-          </div>
-        </div>
-      </div>
-<a href="sharing-your-book.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
-    </div>
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Statistical Rethinking Workbook</strong>" was written by Aaron Berg. It was last built on 2022-03-08.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/agberg/statistical_rethinking_workbook/edit/main/07-references.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
 </body>
-
 </html>
